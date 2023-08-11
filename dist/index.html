@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind produced CSS -->
+    <link rel="stylesheet" href="output.css" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <title>Start</title>
+    <style>
+      /* Import GitHub Font Mona Sans*/
+      @font-face {
+        font-family: 'Mona Sans';
+        src:
+        url('../resources/fonts/Mona Sans/Mona-Sans.woff2') format('woff2 supports variations'),
+        url('../resources/fonts/Mona Sans/Mona-Sans.woff2') format('woff2-variations');
+        font-weight: 200 900;
+        font-stretch: 75% 125%;
+      }
+      /* Apply font and set height in %*/
+      #header { height: 2%; }
+      #navigation { height: 5%; font-family: 'Mona Sans'; font-weight: 700; font-stretch: 115%; }
+      #title { height: 20%; font-family: 'Mona Sans'; font-weight: 700; font-stretch: 115%; font-size: 40px;}
+      #content { height: 63%; font-family: 'Mona Sans'; font-weight: 700; font-stretch: 115%; }
+      #footer { height: 10%; font-family: 'Mona Sans'; font-weight: 700; font-stretch: 115%; }
+    </style>
+</head>
+<body>
+<div id="container" class="h-screen w-screen">
+
+  <div id="header" class=""></div>
+
+    <div id="navigation" class="bg-gradient-to-t from-cyan-50 border-b-2 text-center">
+      <ul class="flex flex-row ">
+        <li class="basis-1/4 flex items-center justify-center"><a href="#"><img id="icon" src="../resources/images/logo.png" width="30px" height="30px"></a></li>
+        <li class="basis-1/4"><a href="#">Start</a></li>      
+        <li class="basis-1/4"><a href="contact.html">Termine</a></li>
+        <li class="basis-1/4"><a href="#">About</a></li>
+      </ul>
+    </div>
+
+    <div id="title" class="flex text-center bg-cyan-50">
+      <div id="wrapper" class="m-auto w-full">
+      <h1 class="text-gray-700">Lorem Ipsum</h1>
+      <div id="spacer" class="m-auto bg-cyan-50 w-1/2 h-1"></div>
+      <div id="spacer" class="m-auto bg-blue-950 w-1/2 h-1"></div>
+      <h1 class="text-gray-700">Company</h1>
+      </div>
+    </div>
+
+    <div id="content" class="flex bg-gradient-to-t from-cyan-300 to-cyan-50">
+      
+      <div id="paragraph-1" class="m-auto bg-black bg-opacity-10 text-center w-1/6">
+        <p><a>Service #1 - </a><i class="bi bi-stack"></i></p>
+        <hr>
+        <br>
+        <p>Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum.</p>
+        <br>
+        <p>Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum.</p>
+        <br>
+        <p>Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum.</p>
+        </p>
+        <br>
+      </div>
+
+      <div id="paragraph-2" class="m-auto bg-black bg-opacity-10 text-center w-1/6">
+      <p><a>Service #2 - </a><i class="bi bi-diagram-3-fill"></i></p>
+      <hr>
+      <br>
+      <p>Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum.</p>
+      <br>
+      <p>Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum.</p>
+      <br>
+      <p>Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum.</p>
+      </p>
+      <br>
+    </div>
+
+    <div id="paragraph-3" class="m-auto bg-black bg-opacity-10 text-center w-1/6">
+      <p><a>Service #3 - </a><i class="bi bi-chat-text"></i></p>
+      <hr>
+      <br>
+      <p>Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum.</p>
+      <br>
+      <p>Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum.</p>
+      <br>
+      <p>Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum.</p>
+      </p>
+      <br>
+    </div>
+    </div>
+
+    <div id="footer" class="flex bg-gray-900 text-center border-t-2 text-white">
+    <div class="m-auto">
+    <p>Lorem Ipsum. Company &copy; // GitHub <i class="bi bi-github"></i> // LinkedIn <i class="bi bi-linkedin"></i></p>
+    </div>
+    </div>
+
+  </div>
+</body>
+</html>
