@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gray-800">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +9,43 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <title>Start</title>
     <style>
-      /* Import GitHub Font Mona Sans*/
-      @font-face {
+            
+      /* MORE DESKTOP CSS */
+      #container {font-family: 'Arial'; font-weight: 700; font-stretch: 115%; }
+      #closed { display:none;}
+      #desktop-navigation { height: 5%; font-size: 1.25vw; }
+      #mobile-navigation { display:none; }
+
+      #header { height: 2%; }
+      #title { height: 20%; font-size: 2.25vw;}
+      #content { height: 63%; font-size: 1.0vw; }
+      #footer { height: 10%; font-size: 1.25vw; }
+
+      /* MOBILE CSS */
+      @media only screen and (max-width: 600px) {
+        #container { font-size: 65px;}
+        #closed { display:block;}
+        #desktop-navigation { display:none; }
+        #mobile-navigation { display: none; }
+
+        #header { height: 2%; }
+        #title { height: 50%; font-size: 65px;}
+        #content div { width: 80%; height: 600px;}  
+        #content { flex-direction: column; gap: px; font-size: 20px; height: 2000px; }  
+        #footer {font-size: 20px; height: 100px; }  
+      }
+
+      #glowing-circle {
+        width: 0.1px;
+        height: 0.1px;
+        border-radius: 50%;
+        background-color: rgb(200,200,200,0.99) ;
+        box-shadow:
+          0 0 140px 70px rgb(90, 173, 250); /* outer cyan */
+      }
+
+        /* Import Font */
+        @font-face {
         font-family: 'Mona Sans';
         src:
         url('../resources/fonts/Mona Sans/Mona-Sans.woff2') format('woff2 supports variations'),
@@ -18,41 +53,52 @@
         font-weight: 200 900;
         font-stretch: 75% 125%;
       }
-      /* Apply font and set height in %*/
-      #header { height: 2%; }
-      #navigation { height: 5%; font-family: 'Mona Sans'; font-weight: 700; font-stretch: 115%; }
-      #title { height: 20%; font-family: 'Mona Sans'; font-weight: 700; font-stretch: 115%; font-size: 40px;}
-      #content { height: 63%; font-family: 'Mona Sans'; font-weight: 700; font-stretch: 115%; }
-      #footer { height: 10%; font-family: 'Mona Sans'; font-weight: 700; font-stretch: 115%; }
     </style>
 </head>
 <body>
-<div id="container" class="h-screen w-screen">
+  <div id="mobile-navigation" class="bg-gray-800 text-center h-full w-full">
+    <ul class="flex flex-col">
+      <li class="basis-1/4">
+        <div id="opened" onclick="toggle_mobile_menu()">
+          <a href='#'><i class='bi bi-x'></i></a>
+        </div>
+      </li>
+      <li class="basis-1/4"><a href="#">Start</a></li>      
+      <li class="basis-1/4"><a href="#">Projects</a></li>
+      <li class="basis-1/4"><a href="contact.html">Newsletter</a></li>
+    </ul>
+  </div>
 
-  <div id="header" class=""></div>
-
-    <div id="navigation" class="bg-gradient-to-t from-cyan-50 border-b-2 text-center">
+<div id="container" class="h-screen w-screen text-white">
+  
+  <div id="header" class="bg-gray-800">
+    <div id="closed" class="border-white rounded" onclick="toggle_mobile_menu()">
+      <a href="#" class="border-white rounded"><i class="bi bi-list"></i></a>
+    </div>
+  </div>
+    
+  <div id="desktop-navigation" class="bg-gray-800 text-center">
       <ul class="flex flex-row ">
-        <li class="basis-1/4 flex items-center justify-center"><a href="#"><img id="icon" src="../resources/images/logo.png" width="30px" height="30px"></a></li>
         <li class="basis-1/4"><a href="#">Start</a></li>      
-        <li class="basis-1/4"><a href="contact.html">Termine</a></li>
-        <li class="basis-1/4"><a href="#">About</a></li>
+        <li class="basis-1/4"><a href="#">Projects</a></li>
+        <li class="basis-1/4"><a href="contact.html">Newsletter</a></li>
       </ul>
     </div>
 
-    <div id="title" class="flex text-center bg-cyan-50">
+    <div id="title" class="flex text-center bg-gray-800">
       <div id="wrapper" class="m-auto w-full">
-      <h1 class="text-gray-700">Lorem Ipsum</h1>
-      <div id="spacer" class="m-auto bg-cyan-50 w-1/2 h-1"></div>
-      <div id="spacer" class="m-auto bg-blue-950 w-1/2 h-1"></div>
-      <h1 class="text-gray-700">Company</h1>
+      <h1 class="">Lorem Ipsum</h1>
+      <div id="hr" class="m-auto bg-cyan-50 w-1/2 h-1"></div>
+      <div id="glowing-circle" class="m-auto"></div>
+      <h1 class="">Company</h1>
       </div>
     </div>
 
-    <div id="content" class="flex bg-gradient-to-t from-cyan-300 to-cyan-50">
+
+    <div id="content" class="flex bg-gray-800">
       
-      <div id="paragraph-1" class="m-auto bg-black bg-opacity-10 text-center w-1/6">
-        <p><a>Service #1 - </a><i class="bi bi-stack"></i></p>
+      <div id="paragraph-1" class="m-auto bg-white bg-opacity-10 text-center w-1/6">
+        <p><a>Service #1</a></p>
         <hr>
         <br>
         <p>Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum.</p>
@@ -64,8 +110,8 @@
         <br>
       </div>
 
-      <div id="paragraph-2" class="m-auto bg-black bg-opacity-10 text-center w-1/6">
-      <p><a>Service #2 - </a><i class="bi bi-diagram-3-fill"></i></p>
+      <div id="paragraph-2" class="m-auto bg-white bg-opacity-10 text-center w-1/6">
+      <p><a>Service #2</a></p>
       <hr>
       <br>
       <p>Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum.</p>
@@ -77,8 +123,8 @@
       <br>
     </div>
 
-    <div id="paragraph-3" class="m-auto bg-black bg-opacity-10 text-center w-1/6">
-      <p><a>Service #3 - </a><i class="bi bi-chat-text"></i></p>
+    <div id="paragraph-3" class="m-auto bg-white bg-opacity-10 text-center w-1/6">
+      <p><a>Service #3</a</p>
       <hr>
       <br>
       <p>Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum. Lorem Ipsum Lorem ipsum.</p>
@@ -91,12 +137,38 @@
     </div>
     </div>
 
-    <div id="footer" class="flex bg-gray-900 text-center border-t-2 text-white">
+    <div id="footer" class="flex bg-gray-800 text-center border-t-2">
     <div class="m-auto">
-    <p>Lorem Ipsum. Company &copy; // GitHub <i class="bi bi-github"></i> // LinkedIn <i class="bi bi-linkedin"></i></p>
+    <p>Lorem Ipsum. Company</p>
+    <i class="bi bi-twitter"></i> | 
+    <i class="bi bi-facebook"></i> | 
+    <i class="bi bi-instagram"></i>
     </div>
     </div>
 
   </div>
+
+  <script>
+    // Defining Variables
+    var isopen = false;
+
+    // Defining Functions
+    function toggle_mobile_menu() {
+
+        let container = document.getElementById('container');
+        let mobile_navigation = document.getElementById('mobile-navigation');
+
+        if(isopen) {
+          mobile_navigation.style.display = 'none';
+          container.style.display = 'block';
+        }
+        if(!isopen) {
+          container.style.display = 'none';
+          mobile_navigation.style.display = 'block';
+        }
+
+        isopen = !isopen;
+    }
+</script>
 </body>
 </html>
