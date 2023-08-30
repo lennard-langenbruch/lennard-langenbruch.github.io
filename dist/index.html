@@ -6,25 +6,10 @@
     <link rel="stylesheet" href="output.css" />
     <link rel="stylesheet" href="notailwind.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <title>Home</title>
-    <style>
-
-      @media only screen and (max-width: 600px) {
-
-        #closed { display:block; }
-        #desktop-navigation { display:none; }
-        #mobile-navigation { display: none; }
-        #header { height: 10vh; }
-        #title { height: 75vh; }
-        #content div { width: 90%; height: 500px; }  
-        #content { flex-direction: column; gap: 100px;  height: 2000px; }  
-        #footer { height: 100px; }  
-      }
-
-    </style>
+    <title>Home / Welcome</title>
 </head>
 <body>
-<div id="mobile-navigation" class="border-2 bg-gray-800 h-[100vh] text-lg text-center text-white w-full flex flex-col justify-between">
+<div id="mobile-navigation" class="font-['Arial'] hidden sm:hidden md:hidden lg:hidden border-2 bg-gray-800 h-[100vh] text-lg text-center text-white w-full flex-col justify-between">
     <div class="flex basis-1/4">
       <div id="opened" class="m-auto" onclick="toggle_mobile_menu()"><a href='#'><i class="bi bi-x"></i></i></a></div>
     </div>
@@ -33,15 +18,15 @@
     <div class="basis-1/4"><a href="#">☕</a></div>
 </div>
 
-<div id="container" class="h-screen w-screen text-md text-white">
+<div id="container" class="h-screen w-screen font-['Arial'] text-md text-white">
 
-  <div id="header" class="bg-gray-800 h-[2%]">
-    <div id="closed" class="border-white" onclick="toggle_mobile_menu()">
+  <div id="header" class="h-[10vh] sm:h-[2%] md:h-[2%] lg:h-[2%] bg-gray-800 ">
+    <div id="closed" class="block sm:hidden md:hidden lg:hidden border-white" onclick="toggle_mobile_menu()">
       <a href="#" class="border-white"><i class="bi bi-list"></i></a>
     </div>
   </div>
 
-  <div id="desktop-navigation" class="bg-gray-800 text-center h-[5%]">
+  <div id="desktop-navigation" class="hidden sm:block md:block lg:block bg-gray-800 text-center h-[5%]">
       
     <div class="flex flex-row">
         <div class="basis-1/4"><a href="#">☕</a></div>
@@ -52,21 +37,20 @@
 
   </div>
 
-  <div id="title" class="flex text-lg text-center h-[20%] bg-gray-800">
+  <div id="title" class="h-[75vh] sm:h-[20%] md:h-[20%] lg:h-[20%] flex text-lg text-center bg-gray-800">
 
     <div id="wrapper" class="m-auto w-full">
       <span>Coffee API</span>
-      <div id="hr" class="m-auto bg-cyan-50 w-1/5 h-1"></div>
-      <div id="glowing-circle" class="m-auto"></div>
+      <div id="hr" class="m-auto bg-cyan-50 w-[90%] sm:w-1/5 md:w-1/5 lg:w-1/5 h-1"></div>
+      <div id="glowing-circle" class="m-auto rounded h-[0.1px] w-[0.1px]"></div>
       <span>delivering coffee data</span>
     </div>
 
   </div>
 
-  <div id="content" class="flex h-[63%] bg-gray-800">
+  <div id="content" class="flex flex-col sm:flex-row sm: gap-[100px] md:flex-row md:gap-[100px] lg:flex-row lg:gap-[100px] h-[2000px] sm:h-[63%] md:h-[63%] lg:h-[63%] bg-gray-800">
     
-    <div id="card" class="flex flex-col m-auto border-2 rounded bg-white bg-opacity-10 text-center w-1/6">
-      <br>
+    <div id="card" class="h-[500px] sm:h-[70%] md:h-[70%] lg:h-[70%] flex flex-col m-auto border-2 rounded bg-white bg-opacity-10 text-center w-[80%] sm:w-1/6 md:w-1/6 lg:w-1/6">
       <span class="basis-1/3 text-md">Basic</span>
       <span class="basis-1/3 text-lg">5$</span>
       <ul class="basis-1/3 text-md">
@@ -76,8 +60,7 @@
       </ul>
     </div>
 
-    <div id="card" class="flex flex-col m-auto border-2 rounded bg-white bg-opacity-10 text-center w-1/6">
-      <br>
+    <div id="card" class="h-[500px] sm:h-[70%] md:h-[70%] lg:h-[70%] flex flex-col m-auto border-2 rounded bg-white bg-opacity-10 text-center w-[80%] sm:w-1/6 md:w-1/6 lg:w-1/6">
       <span class="basis-1/3 text-md">Basic</span>
       <span class="basis-1/3 text-lg">5$</span>
       <ul class="basis-1/3 text-md">
@@ -87,8 +70,7 @@
       </ul>
     </div>
 
-    <div id="card" class="flex flex-col m-auto border-2 rounded bg-white bg-opacity-10 text-center w-1/6">
-      <br>
+    <div id="card" class="h-[500px] sm:h-[70%] md:h-[70%] lg:h-[70%] flex flex-col m-auto border-2 rounded bg-white bg-opacity-10 text-center w-[80%] sm:w-1/6 md:w-1/6 lg:w-1/6">
       <span class="basis-1/3 text-md">Basic</span>
       <span class="basis-1/3 text-lg">5$</span>
       <ul class="basis-1/3 text-md">
@@ -100,13 +82,13 @@
 
   </div>
 
-  <div id="footer" class="flex h-[10%] bg-gray-800 text-sm text-center border-t-2">
+  <div id="footer" class="h-[100px] sm:h-[10%] md:h-[10%] lg:h-[10%] flex bg-gray-800 text-sm text-center border-t-2">
     
     <div class="m-auto flex w-full bg-transparent">
       <div class="m-auto"><span>Lorem Ipsum. Company</a></div>
-      <div class="m-auto"><span>Twitter &nbsp;</span><i class="bi bi-twitter"></i></div>
-      <div class="m-auto"><span>Facebook &nbsp;</span><i class="bi bi-facebook"></i></div>
-      <div class="m-auto"><span>Instagram &nbsp;</span><i class="bi bi-instagram"></i></div>
+      <div class="m-auto"><span class="hidden sm:block md:block lg:block">Twitter &nbsp;</span><i class="bi bi-twitter"></i></div>
+      <div class="m-auto"><span class="hidden sm:block md:block lg:block">Facebook &nbsp;</span><i class="bi bi-facebook"></i></div>
+      <div class="m-auto"><span class="hidden sm:block md:block lg:block">Instagram &nbsp;</span><i class="bi bi-instagram"></i></div>
     </div>
 
   </div>
