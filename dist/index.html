@@ -4,161 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="output.css" />
+    <link rel="stylesheet" href="notailwind.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <title>Home</title>
     <style>
 
-      #container {font-family: 'Arial'; font-weight: 700; font-stretch: 115%; }
-      #closed { display:none;}
-      #desktop-navigation { height: 5%; font-size: 1.25vw; }
-      #mobile-navigation { display:none; }
-      #arrow { display: none;}
-      #price { font-size: 2.25vw; }
-      #header { height: 2%; }
-      #title { height: 20%; font-size: 2.25vw;}
-      #content { height: 63%; font-size: 1.0vw; }
-      #footer { height: 10%; font-size: 1.25vw; }
-
       @media only screen and (max-width: 600px) {
-        #container { font-size: 65px;}
+
         #closed { display:block; }
         #desktop-navigation { display:none; }
-        #mobile-navigation { color: white; font-size: 65px; height: 100vh; display: none; }
-        #hr {width: 90%;}
-
-        #header { height: 10vh;}
-        #title { height: 75vh; font-size: 65px;}
-        #price { font-size: 65px; }
-        #content div { width: 90%; height: 500px;}  
-        #content { flex-direction: column; gap: 100px; font-size: 30px; height: 2000px; }  
-        #footer {font-size: 20px; height: 100px; }  
+        #mobile-navigation { display: none; }
+        #header { height: 10vh; }
+        #title { height: 75vh; }
+        #content div { width: 90%; height: 500px; }  
+        #content { flex-direction: column; gap: 100px;  height: 2000px; }  
+        #footer { height: 100px; }  
       }
 
-      #glowing-circle {
-        width: 0.1px;
-        height: 0.1px;
-        border-radius: 50%;
-        background-color: rgb(200,200,200,0.99) ;
-        box-shadow:
-          0 0 200px 100px rgb(90, 173, 250); /* outer cyan */
-      }
-
-        /* Import Font */
-        @font-face {
-        font-family: 'Mona Sans';
-        src:
-        url('../resources/fonts/Mona Sans/Mona-Sans.woff2') format('woff2 supports variations'),
-        url('../resources/fonts/Mona Sans/Mona-Sans.woff2') format('woff2-variations');
-        font-weight: 200 900;
-        font-stretch: 75% 125%;
-      }
     </style>
 </head>
 <body>
-<div id="mobile-navigation" class="border-2 bg-gray-800 text-center w-full flex flex-col justify-between">
+<div id="mobile-navigation" class="border-2 bg-gray-800 h-[100vh] text-lg text-center text-white w-full flex flex-col justify-between">
     <div class="flex basis-1/4">
-      <div id="opened" class="m-auto" onclick="toggle_mobile_menu()"><a href='#'>☕</a></div>
+      <div id="opened" class="m-auto" onclick="toggle_mobile_menu()"><a href='#'><i class="bi bi-x"></i></i></a></div>
     </div>
     <div class="basis-1/4"><a href="#">Home</a></div>
     <div class="basis-1/4"><a href="contact.html">Contact</a></div>
-    <div class="basis-1/4"><a href="#"><i class="bi bi-cup-hot"></i></a></div>
+    <div class="basis-1/4"><a href="#">☕</a></div>
 </div>
 
-<div id="container" class="h-screen w-screen text-white">
+<div id="container" class="h-screen w-screen text-md text-white">
 
-
-
-  <div id="header" class="bg-gray-800">
+  <div id="header" class="bg-gray-800 h-[2%]">
     <div id="closed" class="border-white" onclick="toggle_mobile_menu()">
       <a href="#" class="border-white"><i class="bi bi-list"></i></a>
     </div>
   </div>
 
-
-    
-  <div id="desktop-navigation" class="bg-gray-800 text-center">
-      <div class="flex flex-row">
+  <div id="desktop-navigation" class="bg-gray-800 text-center h-[5%]">
+      
+    <div class="flex flex-row">
         <div class="basis-1/4"><a href="#">☕</a></div>
         <div class="basis-1/4"><a href="#">Home</a></div> 
         <div class="basis-1/4"><a href="contact.html">Contact</a></div>     
         <div class="basis-1/4"><a href="#"><i class="bi bi-info-circle"></i></a></div>
-      </div>
+    </div>
+
   </div>
 
-  <div id="title" class="flex text-center bg-gray-800">
+  <div id="title" class="flex text-lg text-center h-[20%] bg-gray-800">
+
     <div id="wrapper" class="m-auto w-full">
-    <span>Coffee API</span>
-    <div id="hr" class="m-auto bg-cyan-50 w-1/5 h-1"></div>
-    <div id="glowing-circle" class="m-auto"></div>
-    <span>delivering coffee data</span>
+      <span>Coffee API</span>
+      <div id="hr" class="m-auto bg-cyan-50 w-1/5 h-1"></div>
+      <div id="glowing-circle" class="m-auto"></div>
+      <span>delivering coffee data</span>
     </div>
+
   </div>
 
-  <div id="arrow"><a href="#content"><i class="bi bi-arrow-down-circle"></i></a></div>
-
-  <div id="content" class="flex bg-gray-800">
-    <div id="paragraph-1" class="m-auto border-2 rounded bg-white bg-opacity-10 text-center w-1/6">
+  <div id="content" class="flex h-[63%] bg-gray-800">
+    
+    <div id="card" class="flex flex-col m-auto border-2 rounded bg-white bg-opacity-10 text-center w-1/6">
       <br>
-      <span>Free</span>
-      <br>
-      <br>
-      <hr>
-      <br>
-      <span id="price">0$</span>
-      <br>
-      <br>
-      <hr>
-      <br>
-      <p>• &nbsp; Benefits</p>
-      <p>• &nbsp; Benefits</p>
-      <p>• &nbsp; Benefits</p>
-      <br>
+      <span class="basis-1/3 text-md">Basic</span>
+      <span class="basis-1/3 text-lg">5$</span>
+      <ul class="basis-1/3 text-md">
+        <li>Benefits</li>
+        <li>Benefits</li>
+        <li>Benefits</li>
+      </ul>
     </div>
 
-    <div id="paragraph-2" class="m-auto border-2 rounded bg-white bg-opacity-10 text-center w-1/6">
+    <div id="card" class="flex flex-col m-auto border-2 rounded bg-white bg-opacity-10 text-center w-1/6">
       <br>
-      <span>Basic</span>
-      <br>
-      <br>
-      <hr>
-      <br>
-      <span id="price">5$</span>
-      <br>
-      <br>
-      <hr>
-      <br>
-      <p>• &nbsp; Benefits</p>
-      <p>• &nbsp; Benefits</p>
-      <p>• &nbsp; Benefits</p>
-      <br>
+      <span class="basis-1/3 text-md">Basic</span>
+      <span class="basis-1/3 text-lg">5$</span>
+      <ul class="basis-1/3 text-md">
+        <li>Benefits</li>
+        <li>Benefits</li>
+        <li>Benefits</li>
+      </ul>
     </div>
 
-    <div id="paragraph-3" class="m-auto border-2 rounded bg-white bg-opacity-10 text-center w-1/6">
+    <div id="card" class="flex flex-col m-auto border-2 rounded bg-white bg-opacity-10 text-center w-1/6">
       <br>
-      <span>Pro</span>
-      <br>
-      <br>
-      <hr>
-      <br>
-      <span id="price">10$</span>
-      <br>
-      <br>
-      <hr>
-      <br>
-      <p>• &nbsp; Benefits</p>
-      <p>• &nbsp; Benefits</p>
-      <p>• &nbsp; Benefits</p>
-      <br>
+      <span class="basis-1/3 text-md">Basic</span>
+      <span class="basis-1/3 text-lg">5$</span>
+      <ul class="basis-1/3 text-md">
+        <li>Benefits</li>
+        <li>Benefits</li>
+        <li>Benefits</li>
+      </ul>
     </div>
+
   </div>
 
-  <div id="footer" class="flex bg-gray-800 text-center border-t-2">
-    <div class="m-auto flex w-full bg-gray-800">
+  <div id="footer" class="flex h-[10%] bg-gray-800 text-sm text-center border-t-2">
+    
+    <div class="m-auto flex w-full bg-transparent">
       <div class="m-auto"><span>Lorem Ipsum. Company</a></div>
       <div class="m-auto"><span>Twitter &nbsp;</span><i class="bi bi-twitter"></i></div>
       <div class="m-auto"><span>Facebook &nbsp;</span><i class="bi bi-facebook"></i></div>
       <div class="m-auto"><span>Instagram &nbsp;</span><i class="bi bi-instagram"></i></div>
     </div>
+
   </div>
 
   </div>

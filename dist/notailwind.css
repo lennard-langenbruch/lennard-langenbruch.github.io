@@ -1,0 +1,11 @@
+#container {font-family: 'Arial'; font-weight: 700; font-stretch: 115%; }
+#closed { display:none;}
+#mobile-navigation { display:none; }
+#glowing-circle {
+        width: 0.1px;
+        height: 0.1px;
+        border-radius: 50%;
+        background-color: rgb(200,200,200,0.99);
+        box-shadow:
+          0 0 200px 100px rgb(90, 173, 250);
+}
