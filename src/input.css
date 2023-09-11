@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:html {
+    --primary-color: #fff;
+    --secondary-color: #000;
+  }
