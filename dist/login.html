@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="output.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <title>Home / Welcome</title>
-    <style>#content { background-image: url(../resources/images/blob-haikei.png); }</style>
+    <title>Login</title>
+    <style>#content { background-image: url(../resources/images/blurry-gradient-haikei\(1\).svg); background-size: cover; }</style>
 </head>
 <body>
 <div id="mobile-navigation" class="text-mobile sm:text-lg md:text-lg lg:text-lg font-['Arial'] hidden sm:hidden md:hidden lg:hidden border-2 bg-gray-800 h-[100vh]  text-center text-white w-full flex-col justify-between">
@@ -14,13 +14,13 @@
       <div id="opened" class="m-auto" onclick="toggle_mobile_menu_script()"><a href='#'><i class="bi bi-x"></i></i></a></div>
     </div>
     <div class="basis-1/4"><a href="index.html">Home</a></div>
-    <div class="basis-1/4"><a href="#">Contact</a></div>
+    <div class="basis-1/4"><a href="#">Login</a></div>
     <div class="basis-1/4"><a href="#">☕</a></div>
 </div>
 
 <div id="container" class="h-screen w-screen font-['Arial'] font-semibold text-white">
   
-  <div id="header" class="h-[10vh] sm:h-[2%] md:h-[2%] lg:h-[2%] bg-gray-800 ">
+  <div id="header" class="text-mobile sm:text-sm h-[10vh] sm:h-[2%] md:h-[2%] lg:h-[2%] bg-gray-800 ">
     <div id="closed" class="block sm:hidden md:hidden lg:hidden border-white" onclick="toggle_mobile_menu_script()">
       <a href="#" class="border-white"><i class="bi bi-list"></i></a>
     </div>
@@ -29,25 +29,23 @@
   <div id="desktop-navigation" class="text-mobile sm:text-sm hidden sm:block md:block lg:block bg-gray-800 text-center h-[5%]">
     <div class="flex flex-row">
         <div class="basis-1/4"><a href="#">☕</a></div>
-        <div class="basis-1/4"><a href="index.html">Home</a></div> 
-        <div class="basis-1/4"><a href="#">Contact</a></div>     
+        <div class="basis-1/4"><a href="index.html">Home</a></div>
+        <div class="basis-1/4"><a href="#">Login</a></div>     
         <div class="basis-1/4"><a href="#"><i class="bi bi-info-circle"></i></a></div>
     </div>
   </div>
 
-  <div id="content" class="text-mobile sm:text-sm flex w-full text-gray-800 h-[83%]" >
-    <form method="GET" action="contact.php" class="flex flex-col justify-between shadow-lg rounded text-center accent-cyan-100 m-auto bg-white border-2 h-3/4 w-1/5"> 
-      <div class="basis-1/5 m-auto"><span>Feedback &amp; Support</span></div>
-      <div class="basis-1/5 m-auto"><input name="mail" type="email" placeholder="E-Mail" class="basis-1/5 text-center border-2"></div>
-      <div class="basis-1/5 m-auto"><span class="">.</span></div>
-      <div class="basis-1/5 m-auto"><input class="text-center border-2" name="telefon" type="text" placeholder="Telefonnummer / Mobil"></div>
-      <div class="basis-1/5 m-auto"><input class="border border-gray-400 rounded shadow" type="submit" value="Senden"></div>
+  <div id="content" class="text-[40px] sm:text-sm md:text-sm lg:text-sm flex w-full text-gray-800 h-[83%]">
+    <form method="GET" action="login.php" class="flex flex-col justify-between shadow-lg rounded text-center accent-cyan-100 m-auto bg-white border-2 h-3/4 w-[80%] sm:w-1/4 md:w-1/4 lg:w-1/4"> 
+      <div class="basis-1/4 m-auto w-full"><input class="w-[50%] text-center border-2" name="mail" type="email" placeholder="example@mail.com"/></div>
+      <div class="basis-1/4 m-auto w-full"><input class="w-[50%] text-center border-2" name="telefon" type="password" placeholder="Password"/></div>
+      <div class="basis-1/4 m-auto w-full"><input class="w-[50%] border border-gray-400 rounded shadow" type="submit" value="push here"/></div>
+      <div class="basis-1/4 m-auto w-full"><span class="w-[50%]"><a href="#">I forgot my password</a></span></div>
     </form>
   </div>
 
   <div id="footer" class="text-sm h-[100px] sm:h-[10%] md:h-[10%] lg:h-[10%] flex bg-gray-800 text-center border-t-2">
     <div class="m-auto flex w-full bg-transparent">
-      <div class="m-auto"><span>Lorem Ipsum. Company</a></div>
       <div class="m-auto"><span class="hidden sm:block md:block lg:block">Twitter &nbsp;</span><i class="bi bi-twitter"></i></div>
       <div class="m-auto"><span class="hidden sm:block md:block lg:block">Facebook &nbsp;</span><i class="bi bi-facebook"></i></div>
       <div class="m-auto"><span class="hidden sm:block md:block lg:block">Instagram &nbsp;</span><i class="bi bi-instagram"></i></div>
