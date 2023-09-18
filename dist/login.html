@@ -20,13 +20,13 @@
 
 <div id="container" class="h-screen w-screen font-['Arial'] font-semibold text-white">
   
-  <div id="header" class="text-mobile sm:text-sm h-[7%] sm:h-[2%] md:h-[2%] lg:h-[2%] bg-gray-800 ">
+  <div id="header" class="text-mobile sm:text-sm h-[10%] sm:h-[2%] md:h-[2%] lg:h-[2%] bg-gray-800 ">
     <div id="closed" class="block sm:hidden md:hidden lg:hidden border-white" onclick="toggle_mobile_menu_script()">
       <a href="#" class="border-white"><i class="bi bi-list"></i></a>
     </div>
   </div>
 
-  <div id="desktop-navigation" class="text-mobile sm:text-sm hidden sm:block md:block lg:block bg-gray-800 text-center h-[5%]">
+  <div id="desktop-navigation" class="text-mobile sm:text-sm hidden sm:block md:block lg:block bg-gray-800 text-center h-[0%] sm:h-[5%] md:h-[5%] lg:h-[5%]">
     <div class="flex flex-row">
         <div class="basis-1/4"><a href="#">☕</a></div>
         <div class="basis-1/4"><a href="index.html">Home</a></div>
@@ -35,8 +35,8 @@
     </div>
   </div>
 
-  <div id="content" class="text-[20px] sm:text-sm md:text-sm lg:text-sm flex w-full text-gray-800 h-[83%]">
-    <div class="flex flex-col justify-between shadow-lg rounded text-center accent-purple-950 m-auto bg-white border-2 h-3/4 w-[80%] sm:w-[20%] md:w-[20%] lg:w-[20%]"> 
+  <div id="content" class="text-[20px] sm:text-sm md:text-sm lg:text-sm flex w-full text-gray-800 h-[80%]">
+    <div class="flex flex-col justify-between shadow-lg rounded text-center accent-purple-950 m-auto bg-white border-2 h-5/6 w-[80%] sm:w-[20%] md:w-[20%] lg:w-[20%]"> 
       <div class="basis-1/5 m-auto w-full"><span class="w-[70%]">Login</span></div>
       <div class="basis-1/5 m-auto w-full"><input class="w-[70%] text-center border-2" name="mail" type="email"/></div>
       <div class="basis-1/5 m-auto w-full"><input class="w-[70%] text-center border-2" name="telefon" type="password"/></div>
@@ -45,13 +45,15 @@
     </div>
   </div>
 
-  <div id="footer" class="text-sm h-[10%] flex bg-gray-800 text-center border-t-2">
+  
+  <div id="footer" class="text-sm h-[10%] sm:h-[13%] md:h-[13%] lg:h-[13%] flex bg-gray-800 text-center border-t-2">
     <div class="m-auto flex w-full bg-transparent">
       <div class="m-auto"><span class="hidden sm:hidden md:block lg:block">Twitter &nbsp;</span><i class="bi bi-twitter"></i></div>
       <div class="m-auto"><span class="hidden sm:hidden md:block lg:block">Facebook &nbsp;</span><i class="bi bi-facebook"></i></div>
       <div class="m-auto"><span class="hidden sm:hidden md:block lg:block">Instagram &nbsp;</span><i class="bi bi-instagram"></i></div>
     </div>
   </div>
+
 </div>
 <script>
   
