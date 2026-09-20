@@ -1,0 +1,37 @@
+{
+  "name": "react-mui-project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@date-io/date-fns": "^3.2.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@fontsource/roboto": "^5.2.5",
+    "@geist-ui/icons": "^1.0.2",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.3.10",
+    "@mui/x-charts": "^7.28.0",
+    "@mui/x-data-grid": "^8.0.0",
+    "@mui/x-date-pickers": "^7.28.3",
+    "better-sqlite3": "^12.11.1",
+    "date-fns": "^4.1.0",
+    "leaflet": "^1.9.4",
+    "mqtt": "^5.15.1",
+    "next": "15.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-leaflet": "^4.2.1",
+    "recharts": "^3.8.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "15.3.0"
+  }
+}
