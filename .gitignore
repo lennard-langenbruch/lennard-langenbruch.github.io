@@ -40,6 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local data / tooling (contains GPS coordinates)
-*.db
+# local tooling
+/wetterdaten.db
 /.claude/
+
+# generated from data/wetterdaten.db
+/public/readings.json

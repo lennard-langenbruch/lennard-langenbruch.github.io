@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "export-data": "node scripts/export-readings.mjs",
+    "predev": "npm run export-data",
     "dev": "next dev",
+    "prebuild": "npm run export-data",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

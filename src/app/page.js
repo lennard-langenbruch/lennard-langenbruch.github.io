@@ -24,6 +24,33 @@ export default function Home() {
   // Pagination
   const [page, setPage] = useState(1);
 
+  // Historie aus dem statischen Export der Datenbank laden
+  useEffect(() => {
+    async function loadHistory() {
+      try {
+        const res = await fetch("/readings.json");
+        const dbRows = await res.json();
+        const mapped = dbRows.map((r) => {
+          const d = new Date(r.time);
+          return {
+            date: d.toLocaleDateString(),
+            time: d.toLocaleTimeString(),
+            temperature: r.temperature ?? "-",
+            humidity: r.humidity ?? "-",
+            lon: r.lon ?? "-",
+            lat: r.lat ?? "-",
+            battery: r.battery ?? "-"
+          };
+        });
+        // Live-Zeilen, die schon per MQTT eingetroffen sind, bleiben oben
+        setRows((prev) => [...prev, ...mapped]);
+      } catch (err) {
+        console.error("Failed to load readings:", err);
+      }
+    }
+    loadHistory();
+  }, []);
+
   // MQTT Connector
   useEffect(() => {
     const client = mqtt.connect("wss://broker.emqx.io:8084/mqtt");
