@@ -1,7 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Box, Avatar, Pagination } from "@mui/material";
+import {
+  Box,
+  Chip,
+  LinearProgress,
+  Pagination,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CampaignIcon from "@mui/icons-material/Campaign";
@@ -9,6 +22,38 @@ import Link from "next/link";
 import mqtt from "mqtt";
 
 const ROWS_PER_PAGE = 10;
+
+const isNum = (v) => typeof v === "number" && !Number.isNaN(v);
+
+function temperatureColor(t) {
+  if (t < 10) return "info";
+  if (t <= 25) return "success";
+  if (t <= 30) return "warning";
+  return "error";
+}
+
+function batteryColor(b) {
+  if (b < 20) return "error";
+  if (b < 50) return "warning";
+  return "success";
+}
+
+const headCellSx = {
+  bgcolor: "#f8fafc",
+  color: "text.secondary",
+  fontSize: 12,
+  fontWeight: 700,
+  letterSpacing: "0.06em",
+  textTransform: "uppercase",
+  borderBottom: "1px solid #e2e8f0",
+  whiteSpace: "nowrap"
+};
+
+const numSx = { fontVariantNumeric: "tabular-nums" };
+
+function Empty() {
+  return <Box component="span" sx={{ color: "text.disabled" }}>–</Box>;
+}
 
 export default function Home() {
 
@@ -146,74 +191,136 @@ export default function Home() {
         </Box>
       </Box>
 
-      {/* Live Dashboard + Tabelle */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          mt: 6,
-          px: 3
-        }}
-      >
-        <Box
-          sx={{
-            width: "100%",
-            maxWidth: "900px",
-            textAlign: "center",
-            fontSize: "32px",
-            fontWeight: "bold",
-            mb: 3,
-            color: "#222"
-          }}
-        >
-          🌻 Weather History Log
-        </Box>
+      {/* Tabelle */}
+      <Box sx={{ bgcolor: "#f4f6f8", color: "#1a2027", minHeight: "calc(100vh - 90px)", px: { xs: 1.5, sm: 3 }, py: 6 }}>
+        <Box sx={{ maxWidth: 1000, mx: "auto" }}>
+          <Box sx={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: 1, mb: 3 }}>
+            <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
+              🌻 Weather History Log
+            </Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              {rows.length} Messwerte
+            </Typography>
+          </Box>
 
-        <table
-          style={{
-            borderCollapse: "collapse",
-            width: "100%",
-            maxWidth: "900px",
-            backgroundColor: "white"
-          }}
-        >
-          <thead>
-            <tr>
-              <th style={{ border: "1px solid black", padding: "12px" }}>Date</th>
-              <th style={{ border: "1px solid black", padding: "12px" }}>Time</th>
-              <th style={{ border: "1px solid black", padding: "12px" }}>Temperature</th>
-              <th style={{ border: "1px solid black", padding: "12px" }}>Humidity</th>
-              <th style={{ border: "1px solid black", padding: "12px" }}>Latitude</th>
-              <th style={{ border: "1px solid black", padding: "12px" }}>Longitude</th>
-              <th style={{ border: "1px solid black", padding: "12px" }}>Battery</th>
-            </tr>
-          </thead>
+          <Paper
+            elevation={0}
+            sx={{
+              borderRadius: 3,
+              border: "1px solid #e2e8f0",
+              overflow: "hidden",
+              boxShadow: "0 4px 24px rgba(15, 23, 42, 0.06)"
+            }}
+          >
+            <TableContainer>
+              <Table sx={{ minWidth: 720 }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={headCellSx}>Date</TableCell>
+                    <TableCell sx={headCellSx}>Time</TableCell>
+                    <TableCell sx={headCellSx}>Temperature</TableCell>
+                    <TableCell sx={headCellSx}>Humidity</TableCell>
+                    <TableCell sx={headCellSx} align="right">Latitude</TableCell>
+                    <TableCell sx={headCellSx} align="right">Longitude</TableCell>
+                    <TableCell sx={headCellSx}>Battery</TableCell>
+                  </TableRow>
+                </TableHead>
 
-          <tbody>
-            {paginatedRows.map((row, index) => (
-              <tr key={index}>
-                <td style={{ border: "1px solid black", padding: "12px" }}>{row.date}</td>
-                <td style={{ border: "1px solid black", padding: "12px" }}>{row.time}</td>
-                <td style={{ border: "1px solid black", padding: "12px" }}>{row.temperature} °C</td>
-                <td style={{ border: "1px solid black", padding: "12px" }}>{row.humidity} %</td>
-                <td style={{ border: "1px solid black", padding: "12px" }}>{row.lat}</td>
-                <td style={{ border: "1px solid black", padding: "12px" }}>{row.lon}</td>
-                <td style={{ border: "1px solid black", padding: "12px" }}>{row.battery} %</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                <TableBody>
+                  {paginatedRows.map((row, index) => (
+                    <TableRow
+                      key={index}
+                      hover
+                      sx={{
+                        "&:nth-of-type(even)": { bgcolor: "#fafbfc" },
+                        "&:last-child td": { borderBottom: 0 },
+                        "& td": { borderBottom: "1px solid #eef2f6", py: 1.5 }
+                      }}
+                    >
+                      <TableCell sx={{ ...numSx, fontWeight: 600 }}>{row.date}</TableCell>
+                      <TableCell sx={{ ...numSx, color: "text.secondary" }}>{row.time}</TableCell>
+                      <TableCell>
+                        {isNum(row.temperature) ? (
+                          <Chip
+                            size="small"
+                            variant="outlined"
+                            color={temperatureColor(row.temperature)}
+                            label={`${row.temperature} °C`}
+                            sx={{ fontWeight: 600, ...numSx }}
+                          />
+                        ) : (
+                          <Empty />
+                        )}
+                      </TableCell>
+                      <TableCell sx={numSx}>
+                        {isNum(row.humidity) ? `${row.humidity} %` : <Empty />}
+                      </TableCell>
+                      <TableCell align="right" sx={{ ...numSx, color: "text.secondary" }}>
+                        {isNum(row.lat) ? row.lat : <Empty />}
+                      </TableCell>
+                      <TableCell align="right" sx={{ ...numSx, color: "text.secondary" }}>
+                        {isNum(row.lon) ? row.lon : <Empty />}
+                      </TableCell>
+                      <TableCell sx={{ minWidth: 130 }}>
+                        {isNum(row.battery) ? (
+                          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                            <LinearProgress
+                              variant="determinate"
+                              value={Math.min(100, Math.max(0, row.battery))}
+                              color={batteryColor(row.battery)}
+                              sx={{ flex: 1, height: 6, borderRadius: 3, bgcolor: "#e9eef3" }}
+                            />
+                            <Box component="span" sx={{ ...numSx, fontSize: 13, minWidth: 34, textAlign: "right" }}>
+                              {row.battery} %
+                            </Box>
+                          </Box>
+                        ) : (
+                          <Empty />
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
 
-        {/* Pagination */}
-        <Box sx={{ mt: 3, mb: 4 }}>
-          <Pagination
-            count={pageCount}
-            page={page}
-            onChange={handlePageChange}
-            color="primary"
-            shape="rounded"
-          />
+                  {paginatedRows.length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={7} align="center" sx={{ py: 6, color: "text.secondary" }}>
+                        Noch keine Messwerte
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+
+            {/* Pagination */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: 1,
+                px: 2,
+                py: 1.5,
+                borderTop: "1px solid #e2e8f0",
+                bgcolor: "#f8fafc"
+              }}
+            >
+              <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                {rows.length === 0
+                  ? "0 Einträge"
+                  : `${(page - 1) * ROWS_PER_PAGE + 1}–${Math.min(page * ROWS_PER_PAGE, rows.length)} von ${rows.length}`}
+              </Typography>
+              <Pagination
+                count={pageCount}
+                page={page}
+                onChange={handlePageChange}
+                color="primary"
+                shape="rounded"
+                size="small"
+              />
+            </Box>
+          </Paper>
         </Box>
       </Box>
     </Box>
