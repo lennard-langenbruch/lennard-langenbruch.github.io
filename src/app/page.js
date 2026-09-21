@@ -18,9 +18,9 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CampaignIcon from "@mui/icons-material/Campaign";
-import ThermostatIcon from "@mui/icons-material/Thermostat";
 import Link from "next/link";
 import mqtt from "mqtt";
+import PageBackground from "./components/PageBackground";
 
 const ROWS_PER_PAGE = 10;
 
@@ -157,6 +157,7 @@ export default function Home() {
 
   return (
     <Box sx={{ fontFamily: "Arial, sans-serif" }}>
+      <PageBackground />
       <style jsx global>{`
         a.nav-link:link,
         a.nav-link:visited {
@@ -206,21 +207,6 @@ export default function Home() {
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              <Box
-                sx={{
-                  width: 56,
-                  height: 56,
-                  flexShrink: 0,
-                  display: "grid",
-                  placeItems: "center",
-                  borderRadius: 3,
-                  color: "white",
-                  background: "linear-gradient(135deg, #6366f1 0%, #4f46e5 60%, #7c3aed 100%)",
-                  boxShadow: "0 8px 20px rgba(79, 70, 229, 0.35)"
-                }}
-              >
-                <ThermostatIcon sx={{ fontSize: 30 }} />
-              </Box>
               <Box>
                 <Typography
                   variant="overline"

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import Link from "next/link";
 import mqtt from "mqtt";
+import PageBackground from "../components/PageBackground";
 
 export default function LiveCurrent() {
 const [latest, setLatest] = useState(null);
@@ -50,6 +51,7 @@ return () => client.end();
 
 return (
 <Box sx={{ fontFamily: "Arial, sans-serif" }}>
+    <PageBackground variant="dark" />
     <style jsx global>{`
     a.nav-link:link,
     a.nav-link:visited {
@@ -110,7 +112,7 @@ return (
         fontSize: "32px",
         fontWeight: "bold",
         mb: 1,
-        color: "#222",
+        color: "#f1f5f9",
         }}
     >
         🔴 Live Dashboard
@@ -119,7 +121,7 @@ return (
     <Box
         sx={{
         fontSize: "14px",
-        color: connected ? "green" : "gray",
+        color: connected ? "#4ade80" : "#94a3b8",
         mb: 3,
         }}
     >
@@ -127,7 +129,7 @@ return (
     </Box>
 
     {!latest ? (
-        <Box sx={{ color: "#666" }}>Waiting for data ...</Box>
+        <Box sx={{ color: "#cbd5e1" }}>Waiting for data ...</Box>
     ) : (
         <Box
         sx={{

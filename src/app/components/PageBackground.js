@@ -1,15 +1,32 @@
-// Fixierter Hintergrund: Indigo-Rautenmuster, das zur Seitenmitte hin ausblendet
-const tile = encodeURIComponent(
-  `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
-    <path d="M28 0 L56 28 L28 56 L0 28 Z" fill="none" stroke="#6366f1" stroke-opacity="0.35" stroke-width="1.5"/>
-    <path d="M28 14 L42 28 L28 42 L14 28 Z" fill="#6366f1" fill-opacity="0.12"/>
-  </svg>`
-);
+// Fixierter Hintergrund: Rautenmuster in Indigo, das zur Seitenmitte hin ausblendet
+// variant "light" = helle Seite, "dark" = invertierte, dunkle Variante
+const themes = {
+  light: {
+    stroke: "#6366f1",
+    strokeOpacity: 0.35,
+    fillOpacity: 0.12,
+    base: "radial-gradient(1200px 500px at 50% -10%, rgba(99,102,241,0.10), transparent 70%), #f4f6fb"
+  },
+  dark: {
+    stroke: "#818cf8",
+    strokeOpacity: 0.32,
+    fillOpacity: 0.1,
+    base: "radial-gradient(1200px 600px at 50% -10%, rgba(99,102,241,0.28), transparent 70%), #0c0e24"
+  }
+};
 
 const edgeMask =
   "linear-gradient(90deg, #000 0%, rgba(0,0,0,0.55) 12%, transparent 30%, transparent 70%, rgba(0,0,0,0.55) 88%, #000 100%)";
 
-export default function PageBackground() {
+export default function PageBackground({ variant = "light" }) {
+  const t = themes[variant] ?? themes.light;
+  const tile = encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
+      <path d="M28 0 L56 28 L28 56 L0 28 Z" fill="none" stroke="${t.stroke}" stroke-opacity="${t.strokeOpacity}" stroke-width="1.5"/>
+      <path d="M28 14 L42 28 L28 42 L14 28 Z" fill="${t.stroke}" fill-opacity="${t.fillOpacity}"/>
+    </svg>`
+  );
+
   return (
     <div
       aria-hidden="true"
@@ -18,8 +35,7 @@ export default function PageBackground() {
         inset: 0,
         zIndex: -1,
         pointerEvents: "none",
-        background:
-          "radial-gradient(1200px 500px at 50% -10%, rgba(99,102,241,0.10), transparent 70%), #f4f6fb"
+        background: t.base
       }}
     >
       <div
