@@ -18,6 +18,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CampaignIcon from "@mui/icons-material/Campaign";
+import ThermostatIcon from "@mui/icons-material/Thermostat";
 import Link from "next/link";
 import mqtt from "mqtt";
 
@@ -192,15 +193,65 @@ export default function Home() {
       </Box>
 
       {/* Tabelle */}
-      <Box sx={{ bgcolor: "#f4f6f8", color: "#1a2027", minHeight: "calc(100vh - 90px)", px: { xs: 1.5, sm: 3 }, py: 6 }}>
+      <Box sx={{ color: "#1a2027", minHeight: "calc(100vh - 90px)", px: { xs: 1.5, sm: 3 }, py: 6 }}>
         <Box sx={{ maxWidth: 1000, mx: "auto" }}>
-          <Box sx={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: 1, mb: 3 }}>
-            <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
-              🌻 Weather History Log
-            </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              {rows.length} Messwerte
-            </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: 2,
+              mb: 3
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Box
+                sx={{
+                  width: 56,
+                  height: 56,
+                  flexShrink: 0,
+                  display: "grid",
+                  placeItems: "center",
+                  borderRadius: 3,
+                  color: "white",
+                  background: "linear-gradient(135deg, #6366f1 0%, #4f46e5 60%, #7c3aed 100%)",
+                  boxShadow: "0 8px 20px rgba(79, 70, 229, 0.35)"
+                }}
+              >
+                <ThermostatIcon sx={{ fontSize: 30 }} />
+              </Box>
+              <Box>
+                <Typography
+                  variant="overline"
+                  sx={{ display: "block", lineHeight: 1.6, color: "#6366f1", fontWeight: 700, letterSpacing: "0.14em" }}
+                >
+                  Weather Station
+                </Typography>
+                <Typography
+                  variant="h4"
+                  component="h1"
+                  sx={{
+                    fontWeight: 800,
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1.15,
+                    background: "linear-gradient(90deg, #1e1b4b 0%, #4f46e5 100%)",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    WebkitTextFillColor: "transparent"
+                  }}
+                >
+                  Weather History Log
+                </Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
+                  Temperature, humidity and battery over time
+                </Typography>
+              </Box>
+            </Box>
+            <Chip
+              label={`${rows.length} Messwerte`}
+              sx={{ bgcolor: "#eef2ff", color: "#4338ca", fontWeight: 600, border: "1px solid #c7d2fe" }}
+            />
           </Box>
 
           <Paper
@@ -315,9 +366,15 @@ export default function Home() {
                 count={pageCount}
                 page={page}
                 onChange={handlePageChange}
-                color="primary"
                 shape="rounded"
                 size="small"
+                sx={{
+                  "& .MuiPaginationItem-root.Mui-selected": {
+                    bgcolor: "#4f46e5",
+                    color: "white",
+                    "&:hover": { bgcolor: "#4338ca" }
+                  }
+                }}
               />
             </Box>
           </Paper>
