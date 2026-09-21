@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import SiteHeader from "../components/SiteHeader";
+import Spinner from "../components/Spinner";
 import mqtt from "mqtt";
 import PageBackground from "../components/PageBackground";
 
@@ -91,7 +92,7 @@ return (
     </Box>
 
     {!latest ? (
-        <Box sx={{ color: "#cbd5e1" }}>Waiting for data ...</Box>
+        <Spinner />
     ) : (
         <Box
         sx={{
