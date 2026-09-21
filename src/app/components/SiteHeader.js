@@ -9,7 +9,7 @@ const items = [
   { key: "history", href: "/", label: "Weatherdata History" }
 ];
 
-// Kopfbereich mit Hintergrundbild, Markenname und Menü als Pill-Schalter
+// Kopfbereich mit Hintergrundbild, Menü als Pill-Schalter (links) und Markenname (rechts)
 // `active` = "live" | "history"
 export default function SiteHeader({ active }) {
   return (
@@ -40,29 +40,6 @@ export default function SiteHeader({ active }) {
           justifyContent: { xs: "center", sm: "space-between" }
         }}
       >
-        <Box
-          sx={{
-            display: { xs: "none", sm: "flex" },
-            alignItems: "center",
-            gap: 1.25,
-            fontWeight: 700,
-            fontSize: 18,
-            letterSpacing: "0.02em"
-          }}
-        >
-          <Box
-            component="span"
-            sx={{
-              width: 10,
-              height: 10,
-              borderRadius: "50%",
-              bgcolor: accent.soft,
-              boxShadow: `0 0 0 4px rgba(116,143,252,0.25)`
-            }}
-          />
-          Weather Station
-        </Box>
-
         <Box
           component="nav"
           aria-label="Hauptmenü"
@@ -108,6 +85,29 @@ export default function SiteHeader({ active }) {
               </Box>
             );
           })}
+        </Box>
+
+        <Box
+          sx={{
+            display: { xs: "none", sm: "flex" },
+            alignItems: "center",
+            gap: 1.25,
+            fontWeight: 700,
+            fontSize: 18,
+            letterSpacing: "0.02em"
+          }}
+        >
+          <Box
+            component="span"
+            sx={{
+              width: 10,
+              height: 10,
+              borderRadius: "50%",
+              bgcolor: accent.soft,
+              boxShadow: `0 0 0 4px rgba(116,143,252,0.25)`
+            }}
+          />
+          Weather Station
         </Box>
       </Box>
     </Box>
