@@ -59,7 +59,7 @@ return (
     }
     a.nav-link-live:link,
     a.nav-link-live:visited {
-        color: lightblue;
+        color: #818cf8;
     }
     `}</style>
 

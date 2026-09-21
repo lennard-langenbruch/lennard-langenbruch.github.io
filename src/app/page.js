@@ -165,7 +165,7 @@ export default function Home() {
         }
         a.nav-link-history:link,
         a.nav-link-history:visited {
-          color: lightblue;
+          color: #818cf8;
         }
       `}</style>
 
