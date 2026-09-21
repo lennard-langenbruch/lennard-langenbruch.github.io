@@ -77,7 +77,18 @@ export default function Hardware() {
                 ["Positioning", "GPS"]
               ]}
             />
-            <InfoCard eyebrow="Coming soon" title="More hardware" text="Lorem ipsum dolor sit amet." />
+            <InfoCard
+              image="/images/inr18650.webp"
+              alt="INR18650-35E lithium-ion cell"
+              eyebrow="Battery"
+              title="INR18650-35E"
+              rows={[
+                ["Capacity", "3450 mAh"],
+                ["Voltage", "3.6 V"],
+                ["Charge to", "4.2 V"],
+                ["Max. discharge", "8 A"]
+              ]}
+            />
           </Box>
         </Box>
       </Box>

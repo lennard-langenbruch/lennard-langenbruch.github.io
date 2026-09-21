@@ -16,7 +16,15 @@ export default function InfoCard({ image, alt, eyebrow, title, text, groupLabel,
       }}
     >
       {image ? (
-        <Box component="img" src={image} alt={alt} sx={{ display: "block", width: "100%", height: "auto" }} />
+        // feste Bildfläche (wie die 750x422-Fotos), damit alle Karten gleich hoch starten
+        <Box sx={{ aspectRatio: "750 / 422", bgcolor: "white" }}>
+          <Box
+            component="img"
+            src={image}
+            alt={alt}
+            sx={{ display: "block", width: "100%", height: "100%", objectFit: "contain" }}
+          />
+        </Box>
       ) : (
         <Box
           aria-hidden="true"
