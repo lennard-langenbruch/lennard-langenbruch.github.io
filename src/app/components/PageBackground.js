@@ -1,17 +1,19 @@
+import { accent } from "../accent";
+
 // Fixierter Hintergrund: Rautenmuster in Indigo, das zur Seitenmitte hin ausblendet
 // variant "light" = helle Seite, "dark" = invertierte, dunkle Variante
 const themes = {
   light: {
-    stroke: "#6366f1",
+    stroke: accent.main,
     strokeOpacity: 0.35,
     fillOpacity: 0.12,
-    base: "radial-gradient(1200px 500px at 50% -10%, rgba(99,102,241,0.10), transparent 70%), #f4f6fb"
+    base: "radial-gradient(1200px 500px at 50% -10%, rgba(66,99,235,0.10), transparent 70%), #f3f6fd"
   },
   dark: {
-    stroke: "#818cf8",
+    stroke: accent.soft,
     strokeOpacity: 0.32,
     fillOpacity: 0.1,
-    base: "radial-gradient(1200px 600px at 50% -10%, rgba(99,102,241,0.28), transparent 70%), #0c0e24"
+    base: "radial-gradient(1200px 600px at 50% -10%, rgba(66,99,235,0.30), transparent 70%), #0a1026"
   }
 };
 

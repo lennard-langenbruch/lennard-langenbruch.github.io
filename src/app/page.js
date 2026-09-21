@@ -18,7 +18,8 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CampaignIcon from "@mui/icons-material/Campaign";
-import Link from "next/link";
+import NavMenu from "./components/NavMenu";
+import { accent } from "./accent";
 import mqtt from "mqtt";
 import PageBackground from "./components/PageBackground";
 
@@ -158,16 +159,6 @@ export default function Home() {
   return (
     <Box sx={{ fontFamily: "Arial, sans-serif" }}>
       <PageBackground />
-      <style jsx global>{`
-        a.nav-link:link,
-        a.nav-link:visited {
-          color: white;
-        }
-        a.nav-link-history:link,
-        a.nav-link-history:visited {
-          color: #818cf8;
-        }
-      `}</style>
 
       {/* Header */}
       <Box
@@ -187,9 +178,7 @@ export default function Home() {
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <h3 style={{ margin: 0 }}>
-            <Link className="nav-link" href="/live"> Live Dashboard </Link> | <Link className="nav-link nav-link-history" href="/">Weatherdata History</Link>
-          </h3>
+          <NavMenu active="history" />
         </Box>
       </Box>
 
@@ -210,7 +199,7 @@ export default function Home() {
               <Box>
                 <Typography
                   variant="overline"
-                  sx={{ display: "block", lineHeight: 1.6, color: "#6366f1", fontWeight: 700, letterSpacing: "0.14em" }}
+                  sx={{ display: "block", lineHeight: 1.6, color: accent.main, fontWeight: 700, letterSpacing: "0.14em" }}
                 >
                   Weather Station
                 </Typography>
@@ -221,7 +210,7 @@ export default function Home() {
                     fontWeight: 800,
                     letterSpacing: "-0.02em",
                     lineHeight: 1.15,
-                    background: "linear-gradient(90deg, #1e1b4b 0%, #4f46e5 100%)",
+                    background: `linear-gradient(90deg, ${accent.ink} 0%, ${accent.main} 100%)`,
                     WebkitBackgroundClip: "text",
                     backgroundClip: "text",
                     WebkitTextFillColor: "transparent"
@@ -236,7 +225,7 @@ export default function Home() {
             </Box>
             <Chip
               label={`${rows.length} Messwerte`}
-              sx={{ bgcolor: "#eef2ff", color: "#4338ca", fontWeight: 600, border: "1px solid #c7d2fe" }}
+              sx={{ bgcolor: accent.tint, color: accent.dark, fontWeight: 600, border: `1px solid ${accent.border}` }}
             />
           </Box>
 
@@ -332,10 +321,10 @@ export default function Home() {
             {/* Pagination */}
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "space-between",
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", sm: "1fr auto 1fr" },
+                justifyItems: { xs: "center", sm: "stretch" },
                 alignItems: "center",
-                flexWrap: "wrap",
                 gap: 1,
                 px: 2,
                 py: 1.5,
@@ -355,10 +344,11 @@ export default function Home() {
                 shape="rounded"
                 size="small"
                 sx={{
+                  order: { xs: -1, sm: 0 },
                   "& .MuiPaginationItem-root.Mui-selected": {
-                    bgcolor: "#4f46e5",
+                    bgcolor: accent.main,
                     color: "white",
-                    "&:hover": { bgcolor: "#4338ca" }
+                    "&:hover": { bgcolor: accent.dark }
                   }
                 }}
               />

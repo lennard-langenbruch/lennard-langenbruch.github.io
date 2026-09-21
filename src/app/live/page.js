@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import Link from "next/link";
+import NavMenu from "../components/NavMenu";
 import mqtt from "mqtt";
 import PageBackground from "../components/PageBackground";
 
@@ -52,16 +52,6 @@ return () => client.end();
 return (
 <Box sx={{ fontFamily: "Arial, sans-serif" }}>
     <PageBackground variant="dark" />
-    <style jsx global>{`
-    a.nav-link:link,
-    a.nav-link:visited {
-        color: white;
-    }
-    a.nav-link-live:link,
-    a.nav-link-live:visited {
-        color: #818cf8;
-    }
-    `}</style>
 
     {/* HEADER */}
     <Box
@@ -81,16 +71,7 @@ return (
     }}
     >
     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <h3 style={{ margin: 0 }}>
-        <Link className="nav-link nav-link-live" href="/live">
-            {" "}
-            Live Dashboard{" "}
-        </Link>{" "}
-        |{" "}
-        <Link className="nav-link" href="/">
-            Weatherdata History
-        </Link>
-        </h3>
+        <NavMenu active="live" />
     </Box>
     </Box>
 
