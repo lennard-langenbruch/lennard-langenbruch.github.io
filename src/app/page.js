@@ -22,6 +22,7 @@ import SiteHeader from "./components/SiteHeader";
 import { accent } from "./accent";
 import mqtt from "mqtt";
 import PageBackground from "./components/PageBackground";
+import SideCard from "./components/SideCard";
 
 const ROWS_PER_PAGE = 15;
 
@@ -167,18 +168,18 @@ export default function Home() {
       <Box sx={{ color: "#1a2027", minHeight: "calc(100vh - 90px)", px: { xs: 1.5, sm: 3 }, py: 6 }}>
         <Box
           sx={{
-            maxWidth: 1240,
+            maxWidth: 1400,
             mx: "auto",
             display: "grid",
-            gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "minmax(0, 1fr) 280px" },
-            columnGap: 3,
+            gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "210px minmax(0, 1fr) 210px" },
+            columnGap: 2.5,
             alignItems: "start"
           }}
         >
           <Box sx={{ display: "contents" }}>
           <Box
             sx={{
-              gridColumn: 1,
+              gridColumn: { xs: 1, lg: 2 },
               gridRow: 1,
               display: "flex",
               alignItems: "center",
@@ -225,7 +226,7 @@ export default function Home() {
           <Paper
             elevation={0}
             sx={{
-              gridColumn: 1,
+              gridColumn: { xs: 1, lg: 2 },
               gridRow: 2,
               minWidth: 0,
               borderRadius: 3,
@@ -235,7 +236,7 @@ export default function Home() {
             }}
           >
             <TableContainer>
-              <Table sx={{ minWidth: 720 }}>
+              <Table sx={{ minWidth: 720, "& .MuiTableCell-root": { px: 1.5 } }}>
                 <TableHead>
                   <TableRow>
                     <TableCell sx={headCellSx}>Date</TableCell>
@@ -352,36 +353,33 @@ export default function Home() {
           </Paper>
           </Box>
 
-          {/* Bild an der Seite */}
-          <Box component="aside" sx={{ display: { xs: "none", lg: "block" }, gridColumn: 2, gridRow: 2, position: "sticky", top: 24 }}>
-            <Paper
-              elevation={0}
-              sx={{
-                borderRadius: 3,
-                border: "1px solid #e2e8f0",
-                overflow: "hidden",
-                boxShadow: "0 4px 24px rgba(15, 23, 42, 0.06)"
-              }}
-            >
-              <Box
-                component="img"
-                src="/images/t-sim7000g.webp"
-                alt="T-SIM7000G board"
-                sx={{ display: "block", width: "100%", height: "auto" }}
-              />
-              <Box sx={{ p: 2 }}>
-                <Typography
-                  variant="overline"
-                  sx={{ display: "block", lineHeight: 1.6, color: accent.main, fontWeight: 700, letterSpacing: "0.14em" }}
-                >
-                  Hardware
-                </Typography>
-                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                  T-SIM7000G
-                </Typography>
-              </Box>
-            </Paper>
-          </Box>
+          {/* Seitenkarten */}
+          <SideCard
+            column={1}
+            image="/images/bme680.webp"
+            alt="BME680 sensor board"
+            eyebrow="Sensor"
+            title="BME680"
+            groupLabel="Deviation"
+            rows={[
+              ["Temperature", "±1.0 °C"],
+              ["Humidity", "±3 % RH"],
+              ["Pressure", "±1 hPa"]
+            ]}
+          />
+          <SideCard
+            column={3}
+            image="/images/t-sim7000g.webp"
+            alt="T-SIM7000G board"
+            eyebrow="Hardware"
+            title="T-SIM7000G"
+            rows={[
+              ["Cores", "2 (dual-core)"],
+              ["Clock", "80 MHz"],
+              ["Cellular", "LTE"],
+              ["Positioning", "GPS"]
+            ]}
+          />
         </Box>
       </Box>
     </Box>
