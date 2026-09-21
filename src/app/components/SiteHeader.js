@@ -2,15 +2,18 @@
 
 import Link from "next/link";
 import { Box } from "@mui/material";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { accent } from "../accent";
 
+// `short` = Kurzlabel für schmale Bildschirme (unter md)
 const items = [
-  { key: "live", href: "/live", label: "Live Dashboard" },
-  { key: "history", href: "/", label: "Weatherdata History" }
+  { key: "live", href: "/live", label: "Live Dashboard", short: "Live" },
+  { key: "history", href: "/", label: "Weatherdata History", short: "History" },
+  { key: "hardware", href: "/hardware", label: "Hardware", short: "Hardware", icon: true }
 ];
 
 // Kopfbereich mit Hintergrundbild, Menü als Pill-Schalter (links) und Markenname (rechts)
-// `active` = "live" | "history"
+// `active` = "live" | "history" | "hardware"
 export default function SiteHeader({ active }) {
   return (
     <Box
@@ -33,11 +36,11 @@ export default function SiteHeader({ active }) {
       <Box
         sx={{
           height: "100%",
-          maxWidth: 1400,
+          maxWidth: 1000,
           mx: "auto",
           display: "flex",
           alignItems: "center",
-          justifyContent: { xs: "center", sm: "space-between" }
+          justifyContent: { xs: "center", lg: "space-between" }
         }}
       >
         <Box
@@ -54,7 +57,7 @@ export default function SiteHeader({ active }) {
             WebkitBackdropFilter: "blur(8px)"
           }}
         >
-          {items.map(({ key, href, label }) => {
+          {items.map(({ key, href, label, short, icon }) => {
             const isActive = active === key;
             return (
               <Box
@@ -63,7 +66,10 @@ export default function SiteHeader({ active }) {
                 href={href}
                 aria-current={isActive ? "page" : undefined}
                 sx={{
-                  px: { xs: 1.75, sm: 2.5 },
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 0.75,
+                  px: { xs: 1.5, md: 2.5 },
                   py: 1,
                   borderRadius: 999,
                   fontSize: 14,
@@ -81,7 +87,9 @@ export default function SiteHeader({ active }) {
                   "&:focus-visible": { outline: "2px solid white", outlineOffset: 2 }
                 }}
               >
-                {label}
+                <Box component="span" sx={{ display: { xs: "none", md: "inline" } }}>{label}</Box>
+                <Box component="span" sx={{ display: { xs: "inline", md: "none" } }}>{short}</Box>
+                {icon && <InfoOutlinedIcon aria-hidden="true" sx={{ fontSize: 17 }} />}
               </Box>
             );
           })}
@@ -89,7 +97,7 @@ export default function SiteHeader({ active }) {
 
         <Box
           sx={{
-            display: { xs: "none", sm: "flex" },
+            display: { xs: "none", lg: "flex" },
             alignItems: "center",
             gap: 1.25,
             fontWeight: 700,

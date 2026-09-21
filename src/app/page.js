@@ -22,7 +22,6 @@ import SiteHeader from "./components/SiteHeader";
 import { accent } from "./accent";
 import mqtt from "mqtt";
 import PageBackground from "./components/PageBackground";
-import SideCard from "./components/SideCard";
 
 const ROWS_PER_PAGE = 15;
 
@@ -166,21 +165,9 @@ export default function Home() {
 
       {/* Tabelle */}
       <Box sx={{ color: "#1a2027", minHeight: "calc(100vh - 90px)", px: { xs: 1.5, sm: 3 }, py: 6 }}>
-        <Box
-          sx={{
-            maxWidth: 1400,
-            mx: "auto",
-            display: "grid",
-            gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "210px minmax(0, 1fr) 210px" },
-            columnGap: 2.5,
-            alignItems: "start"
-          }}
-        >
-          <Box sx={{ display: "contents" }}>
+        <Box sx={{ maxWidth: 1000, mx: "auto" }}>
           <Box
             sx={{
-              gridColumn: { xs: 1, lg: 2 },
-              gridRow: 1,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -226,9 +213,6 @@ export default function Home() {
           <Paper
             elevation={0}
             sx={{
-              gridColumn: { xs: 1, lg: 2 },
-              gridRow: 2,
-              minWidth: 0,
               borderRadius: 3,
               border: "1px solid #e2e8f0",
               overflow: "hidden",
@@ -236,7 +220,7 @@ export default function Home() {
             }}
           >
             <TableContainer>
-              <Table sx={{ minWidth: 720, "& .MuiTableCell-root": { px: 1.5 } }}>
+              <Table sx={{ minWidth: 720 }}>
                 <TableHead>
                   <TableRow>
                     <TableCell sx={headCellSx}>Date</TableCell>
@@ -351,35 +335,6 @@ export default function Home() {
               />
             </Box>
           </Paper>
-          </Box>
-
-          {/* Seitenkarten */}
-          <SideCard
-            column={1}
-            image="/images/bme680.webp"
-            alt="BME680 sensor board"
-            eyebrow="Sensor"
-            title="BME680"
-            groupLabel="Deviation"
-            rows={[
-              ["Temperature", "±1.0 °C"],
-              ["Humidity", "±3 % RH"],
-              ["Pressure", "±1 hPa"]
-            ]}
-          />
-          <SideCard
-            column={3}
-            image="/images/t-sim7000g.webp"
-            alt="T-SIM7000G board"
-            eyebrow="Hardware"
-            title="T-SIM7000G"
-            rows={[
-              ["Cores", "2 (dual-core)"],
-              ["Clock", "80 MHz"],
-              ["Cellular", "LTE"],
-              ["Positioning", "GPS"]
-            ]}
-          />
         </Box>
       </Box>
     </Box>
