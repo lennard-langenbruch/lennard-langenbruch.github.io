@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import NavMenu from "../components/NavMenu";
+import SiteHeader from "../components/SiteHeader";
 import mqtt from "mqtt";
 import PageBackground from "../components/PageBackground";
 
@@ -54,26 +54,7 @@ return (
     <PageBackground variant="dark" />
 
     {/* HEADER */}
-    <Box
-    sx={{
-        width: "100%",
-        height: 90,
-        display: "flex",
-        justifyContent: "center",
-        px: 3,
-        color: "white",
-        backgroundImage: `
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url("https://images.pexels.com/photos/1525041/pexels-photo-1525041.jpeg")
-        `,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-    }}
-    >
-    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <NavMenu active="live" />
-    </Box>
-    </Box>
+    <SiteHeader active="live" />
 
     {/* Aktueller Wert */}
     <Box

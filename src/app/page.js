@@ -18,7 +18,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CampaignIcon from "@mui/icons-material/Campaign";
-import NavMenu from "./components/NavMenu";
+import SiteHeader from "./components/SiteHeader";
 import { accent } from "./accent";
 import mqtt from "mqtt";
 import PageBackground from "./components/PageBackground";
@@ -161,26 +161,7 @@ export default function Home() {
       <PageBackground />
 
       {/* Header */}
-      <Box
-        sx={{
-          width: "100%",
-          height: 90,
-          display: "flex",
-          justifyContent: "center",
-          px: 3,
-          color: "white",
-          backgroundImage: `
-            linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-            url("https://images.pexels.com/photos/1525041/pexels-photo-1525041.jpeg")
-          `,
-          backgroundSize: "cover",
-          backgroundPosition: "center"
-        }}
-      >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <NavMenu active="history" />
-        </Box>
-      </Box>
+      <SiteHeader active="history" />
 
       {/* Tabelle */}
       <Box sx={{ color: "#1a2027", minHeight: "calc(100vh - 90px)", px: { xs: 1.5, sm: 3 }, py: 6 }}>
@@ -201,7 +182,7 @@ export default function Home() {
                   variant="overline"
                   sx={{ display: "block", lineHeight: 1.6, color: accent.main, fontWeight: 700, letterSpacing: "0.14em" }}
                 >
-                  Weather Station
+                  Sensor Data
                 </Typography>
                 <Typography
                   variant="h4"
