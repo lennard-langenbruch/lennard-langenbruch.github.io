@@ -23,7 +23,7 @@ import { accent } from "./accent";
 import mqtt from "mqtt";
 import PageBackground from "./components/PageBackground";
 
-const ROWS_PER_PAGE = 10;
+const ROWS_PER_PAGE = 15;
 
 const isNum = (v) => typeof v === "number" && !Number.isNaN(v);
 
@@ -207,8 +207,8 @@ export default function Home() {
                   variant="h4"
                   component="h1"
                   sx={{
-                    fontWeight: 800,
-                    letterSpacing: "-0.02em",
+                    fontWeight: 700,
+                    letterSpacing: "-0.01em",
                     lineHeight: 1.15,
                     background: `linear-gradient(90deg, ${accent.ink} 0%, ${accent.main} 100%)`,
                     WebkitBackgroundClip: "text",
