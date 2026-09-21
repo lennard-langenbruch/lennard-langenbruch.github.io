@@ -165,9 +165,21 @@ export default function Home() {
 
       {/* Tabelle */}
       <Box sx={{ color: "#1a2027", minHeight: "calc(100vh - 90px)", px: { xs: 1.5, sm: 3 }, py: 6 }}>
-        <Box sx={{ maxWidth: 1000, mx: "auto" }}>
+        <Box
+          sx={{
+            maxWidth: 1240,
+            mx: "auto",
+            display: "grid",
+            gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "minmax(0, 1fr) 280px" },
+            columnGap: 3,
+            alignItems: "start"
+          }}
+        >
+          <Box sx={{ display: "contents" }}>
           <Box
             sx={{
+              gridColumn: 1,
+              gridRow: 1,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -213,6 +225,9 @@ export default function Home() {
           <Paper
             elevation={0}
             sx={{
+              gridColumn: 1,
+              gridRow: 2,
+              minWidth: 0,
               borderRadius: 3,
               border: "1px solid #e2e8f0",
               overflow: "hidden",
@@ -335,6 +350,38 @@ export default function Home() {
               />
             </Box>
           </Paper>
+          </Box>
+
+          {/* Bild an der Seite */}
+          <Box component="aside" sx={{ display: { xs: "none", lg: "block" }, gridColumn: 2, gridRow: 2, position: "sticky", top: 24 }}>
+            <Paper
+              elevation={0}
+              sx={{
+                borderRadius: 3,
+                border: "1px solid #e2e8f0",
+                overflow: "hidden",
+                boxShadow: "0 4px 24px rgba(15, 23, 42, 0.06)"
+              }}
+            >
+              <Box
+                component="img"
+                src="/images/t-sim7000g.webp"
+                alt="T-SIM7000G board"
+                sx={{ display: "block", width: "100%", height: "auto" }}
+              />
+              <Box sx={{ p: 2 }}>
+                <Typography
+                  variant="overline"
+                  sx={{ display: "block", lineHeight: 1.6, color: accent.main, fontWeight: 700, letterSpacing: "0.14em" }}
+                >
+                  Hardware
+                </Typography>
+                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                  T-SIM7000G
+                </Typography>
+              </Box>
+            </Paper>
+          </Box>
         </Box>
       </Box>
     </Box>

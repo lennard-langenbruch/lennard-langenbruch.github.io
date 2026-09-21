@@ -33,7 +33,7 @@ export default function SiteHeader({ active }) {
       <Box
         sx={{
           height: "100%",
-          maxWidth: 1000,
+          maxWidth: 1240,
           mx: "auto",
           display: "flex",
           alignItems: "center",
