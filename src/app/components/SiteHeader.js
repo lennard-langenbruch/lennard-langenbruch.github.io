@@ -107,7 +107,7 @@ export default function SiteHeader({ active }) {
               boxShadow: `0 0 0 4px rgba(116,143,252,0.25)`
             }}
           />
-          Weather Station
+          Weather Station (Wuppertal)
         </Box>
       </Box>
     </Box>

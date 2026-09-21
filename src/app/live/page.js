@@ -88,7 +88,7 @@ return (
         mb: 3,
         }}
     >
-        {connected ? "● Live connected" : "○ Connect..."}
+        {connected ? "● Live connected to emqx (fhswf/lennard/json)" : "○ Connecting to emqx ((fhswf/lennard/json)"}
     </Box>
 
     {!latest ? (
