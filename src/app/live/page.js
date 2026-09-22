@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import SiteHeader from "../components/SiteHeader";
 import Spinner from "../components/Spinner";
+import ExportedLiveMap from "../components/ExportedLiveMap";
 import mqtt from "mqtt";
 import PageBackground from "../components/PageBackground";
 
@@ -130,6 +131,12 @@ return (
         </Box>
         </Box>
     )}
+
+    {/* Kartenausschnitt: von Anfang an sichtbar, Marker kommt sobald ein GPS-Fix da ist */}
+    <ExportedLiveMap
+        lon={typeof latest?.lon === "number" ? latest.lon : undefined}
+        lat={typeof latest?.lat === "number" ? latest.lat : undefined}
+    />
     </Box>
 </Box>
 );
