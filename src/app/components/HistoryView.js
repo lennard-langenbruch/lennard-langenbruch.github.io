@@ -187,7 +187,7 @@ export default function HistoryView({ readings, series }) {
           disabled={rows.length === 0}
           onClick={() => exportReadings(rows)}
         >
-          Export data as JSON
+          Export all as JSON
         </Button>
       </Box>
 
