@@ -152,20 +152,22 @@ export default function LiveDashboard() {
           </>
         )}
 
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-          <ExportedLiveMap
-            lon={isNum(latest?.lon) ? latest.lon : undefined}
-            lat={isNum(latest?.lat) ? latest.lat : undefined}
-          />
-        </Box>
-
-        <Typography
-          variant="caption"
-          sx={{ display: "block", textAlign: "center", color: "rgba(241,245,249,0.55)", mt: 2 }}
-        >
-          Values are not stored on this page. The recorded history lives under History.
-        </Typography>
       </Box>
+
+      {/* Outside the data column, so its width is independent of the cards above */}
+      <Box sx={{ width: "70%", mx: "auto", mt: 3 }}>
+        <ExportedLiveMap
+          lon={isNum(latest?.lon) ? latest.lon : undefined}
+          lat={isNum(latest?.lat) ? latest.lat : undefined}
+        />
+      </Box>
+
+      <Typography
+        variant="caption"
+        sx={{ display: "block", textAlign: "center", color: "rgba(241,245,249,0.55)", mt: 2 }}
+      >
+        Values are not stored on this page. The recorded history lives under History.
+      </Typography>
     </Box>
   );
 }
