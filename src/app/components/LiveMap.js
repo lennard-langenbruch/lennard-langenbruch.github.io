@@ -61,7 +61,7 @@ export default function LiveMap({ lon, lat }) {
   return (
     <Box
       sx={{
-        width: "100%",
+        width: "50%",
         maxWidth: "500px",
         mt: 3,
         height: 260,
