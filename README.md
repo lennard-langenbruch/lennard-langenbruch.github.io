@@ -21,3 +21,70 @@
 
 <img width="768" height="423" alt="grafik" src="https://github.com/user-attachments/assets/31517cd1-e306-46d7-a499-dcf45fc47ffd"/>
 <p><sub><i>Diagram created with <a href="https://www.drawio.com">draw.io</a></i></sub></p>
+
+<br>
+
+## Wie die Daten in die Seite kommen
+
+Die Seite liegt auf GitHub Pages und wird dort nur ausgeliefert, es läuft kein Node-Prozess.
+Deshalb steht in `next.config.mjs` `output: "export"`, und die Datenbank kann zur Laufzeit nicht
+abgefragt werden.
+
+Stattdessen liest `scripts/export-readings.mjs` die Datenbank einmal beim Build und schreibt
+`src/data/readings.json`. Die Startseite ist eine Server-Komponente und importiert diese Datei
+direkt, die Historie steht also schon im ausgelieferten HTML. Kein Nachladen im Browser, kein
+Spinner für Daten, die sich nach dem Build ohnehin nicht mehr ändern.
+
+Nur der Live-Teil läuft im Browser. Genau ein Hook (`src/app/hooks/useLiveReading.js`) hält die
+MQTT-Verbindung offen und wird von der History- und der Live-Seite gemeinsam genutzt. Messwerte,
+die während des Besuchs eintreffen, werden der Historie im Speicher vorangestellt, aber von hier
+aus nicht in die Datenbank zurückgeschrieben.
+
+## Entscheidungen
+
+**Datum und Uhrzeit mit fester Locale.** Die Historie wird beim Build auf dem Server gerendert und
+im Browser hydriert. Würde mit der Locale des Besuchers formatiert, entstünden auf beiden Seiten
+unterschiedliche Zeichenketten und React bricht die Hydration ab. `src/lib/format.js` legt deshalb
+`en-GB` und `Europe/Berlin` fest.
+
+**Diagramm wird nachgeladen.** Recharts macht etwa ein Drittel des JavaScripts der Startseite aus
+und liegt unterhalb des sichtbaren Bereichs, wird also per `next/dynamic` erst nach der Hydration
+geholt.
+
+**MUI in Server-Komponenten einzeln importieren.** `import Box from "@mui/material/Box"` statt aus
+dem Sammelimport, sonst bricht der Build in MUI 7 ab.
+
+**Der Mapbox-Token steht absichtlich im Quellcode.** Es ist ein `pk.`-Client-Token, das im Bundle
+sichtbar sein soll, und im Mapbox-Konto per URL eingeschränkt.
+
+## Lokal starten
+
+```bash
+npm install
+npm run dev        # predev exportiert die Datenbank nach src/data/readings.json
+```
+
+```bash
+npm run lint
+npm run build      # schreibt die statische Seite nach out/
+```
+
+Node 20 oder neuer. `better-sqlite3` ist ein natives Modul und wird beim `npm install` übersetzt.
+
+## Projektaufbau
+
+```
+data/wetterdaten.db          gesammelte Messwerte, Quelle der Historie
+scripts/export-readings.mjs  Datenbank -> src/data/readings.json, läuft vor dev und build
+src/lib/                     Datenzugriff und Formatierung, ohne React
+src/app/                     Routen: / (Historie), /live, /hardware
+src/app/components/          UI, "use client" nur wo der Browser gebraucht wird
+src/app/hooks/               die gemeinsame MQTT-Verbindung
+esp32_hardware.ino           Firmware der Wetterstation
+esp32_mock_wifi.ino          gleiches Payload über WLAN, zum Testen ohne SIM-Karte
+```
+
+## Deployment
+
+Jeder Push auf `main` startet `.github/workflows/deploy.yml`: installieren, linten, bauen und
+`out/` auf GitHub Pages veröffentlichen.
