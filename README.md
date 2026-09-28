@@ -40,23 +40,6 @@ MQTT-Verbindung offen und wird von der History- und der Live-Seite gemeinsam gen
 die während des Besuchs eintreffen, werden der Historie im Speicher vorangestellt, aber von hier
 aus nicht in die Datenbank zurückgeschrieben.
 
-## Entscheidungen
-
-**Datum und Uhrzeit mit fester Locale.** Die Historie wird beim Build auf dem Server gerendert und
-im Browser hydriert. Würde mit der Locale des Besuchers formatiert, entstünden auf beiden Seiten
-unterschiedliche Zeichenketten und React bricht die Hydration ab. `src/lib/format.js` legt deshalb
-`en-GB` und `Europe/Berlin` fest.
-
-**Diagramm wird nachgeladen.** Recharts macht etwa ein Drittel des JavaScripts der Startseite aus
-und liegt unterhalb des sichtbaren Bereichs, wird also per `next/dynamic` erst nach der Hydration
-geholt.
-
-**MUI in Server-Komponenten einzeln importieren.** `import Box from "@mui/material/Box"` statt aus
-dem Sammelimport, sonst bricht der Build in MUI 7 ab.
-
-**Der Mapbox-Token steht absichtlich im Quellcode.** Es ist ein `pk.`-Client-Token, das im Bundle
-sichtbar sein soll, und im Mapbox-Konto per URL eingeschränkt.
-
 ## Lokal starten
 
 ```bash
@@ -68,8 +51,6 @@ npm run dev        # predev exportiert die Datenbank nach src/data/readings.json
 npm run lint
 npm run build      # schreibt die statische Seite nach out/
 ```
-
-Node 20 oder neuer. `better-sqlite3` ist ein natives Modul und wird beim `npm install` übersetzt.
 
 ## Projektaufbau
 
