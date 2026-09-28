@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import {
   Box,
+  Button,
   Chip,
   LinearProgress,
   Pagination,
@@ -16,6 +17,7 @@ import {
   Typography
 } from "@mui/material";
 import dynamic from "next/dynamic";
+import DownloadIcon from "@mui/icons-material/Download";
 import StatCard from "./StatCard";
 import useLiveReading from "../hooks/useLiveReading";
 import { accent } from "../accent";
@@ -39,6 +41,30 @@ const TrendChart = dynamic(() => import("./TrendChart"), {
 });
 
 const ROWS_PER_PAGE = 15;
+
+/**
+ * The readings are already in the browser (they ship with the page), so the export needs no
+ * server: the file is built from the data in memory and handed to the browser as a download.
+ */
+function exportReadings(rows) {
+  const payload = rows.map(({ time, temperature, humidity, lon, lat, battery }) => ({
+    time,
+    temperature,
+    humidity,
+    lon,
+    lat,
+    battery
+  }));
+
+  const url = URL.createObjectURL(
+    new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" })
+  );
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `weather-readings-${new Date().toISOString().slice(0, 10)}.json`;
+  link.click();
+  URL.revokeObjectURL(url);
+}
 
 function temperatureColor(value) {
   if (value < 10) return "info";
@@ -152,6 +178,18 @@ export default function HistoryView({ readings, series }) {
       </Box>
 
       <TrendChart data={chartData} />
+
+      <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 1.5 }}>
+        <Button
+          variant="outlined"
+          size="small"
+          startIcon={<DownloadIcon />}
+          disabled={rows.length === 0}
+          onClick={() => exportReadings(rows)}
+        >
+          Export data as JSON
+        </Button>
+      </Box>
 
       <Paper
         elevation={0}
