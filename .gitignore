@@ -44,5 +44,8 @@ next-env.d.ts
 /wetterdaten.db
 /.claude/
 
-# generated from data/wetterdaten.db
-/public/readings.json
+# generated from data/wetterdaten.db at build time
+/src/data/readings.json
+
+# local backup
+/_backup_vor_umbau.zip

@@ -5,32 +5,35 @@ import { Box } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { accent } from "../accent";
 
-// `short` = Kurzlabel für schmale Bildschirme (unter md)
+// `short` = compact label for narrow screens (below md)
 const items = [
   { key: "live", href: "/live", label: "Live Dashboard", short: "Live" },
-  { key: "history", href: "/", label: "Weatherdata History", short: "History" },
+  { key: "history", href: "/", label: "History", short: "History" },
   { key: "hardware", href: "/hardware", label: "Hardware", short: "Hardware", icon: true }
 ];
 
-// Kopfbereich mit Hintergrundbild, Menü als Pill-Schalter (links) und Markenname (rechts)
-// `active` = "live" | "history" | "hardware"
+/**
+ * Site header: pill navigation on the left, station name on the right.
+ * The background is a CSS gradient rather than a hotlinked stock photo, so the header
+ * paints immediately and the page has no third-party dependency.
+ * `active` = "live" | "history" | "hardware"
+ */
 export default function SiteHeader({ active }) {
   return (
     <Box
       component="header"
       sx={{
         width: "100%",
-        boxSizing: "border-box",
         height: 90,
         px: { xs: 2, sm: 3 },
         color: "white",
         borderBottom: "1px solid rgba(255,255,255,0.12)",
+        backgroundColor: accent.ink,
         backgroundImage: `
-          linear-gradient(rgba(10,16,38,0.72), rgba(10,16,38,0.55)),
-          url("https://images.pexels.com/photos/1525041/pexels-photo-1525041.jpeg")
-        `,
-        backgroundSize: "cover",
-        backgroundPosition: "center"
+          radial-gradient(900px 300px at 85% -40%, rgba(116,143,252,0.55), transparent 70%),
+          radial-gradient(600px 260px at 10% 130%, rgba(66,99,235,0.45), transparent 70%),
+          linear-gradient(115deg, #070c1f 0%, ${accent.ink} 55%, ${accent.dark} 100%)
+        `
       }}
     >
       <Box
@@ -40,12 +43,13 @@ export default function SiteHeader({ active }) {
           mx: "auto",
           display: "flex",
           alignItems: "center",
-          justifyContent: { xs: "center", lg: "space-between" }
+          justifyContent: { xs: "center", md: "space-between" },
+          gap: 2
         }}
       >
         <Box
           component="nav"
-          aria-label="Hauptmenü"
+          aria-label="Main navigation"
           sx={{
             display: "flex",
             gap: 0.5,
@@ -75,7 +79,6 @@ export default function SiteHeader({ active }) {
                   fontSize: 14,
                   fontWeight: 700,
                   whiteSpace: "nowrap",
-                  textDecoration: "none",
                   color: isActive ? "white" : "rgba(255,255,255,0.82)",
                   bgcolor: isActive ? "rgba(66,99,235,0.88)" : "transparent",
                   boxShadow: isActive ? "0 4px 14px rgba(66,99,235,0.45)" : "none",
@@ -97,22 +100,24 @@ export default function SiteHeader({ active }) {
 
         <Box
           sx={{
-            display: { xs: "none", lg: "flex" },
+            display: { xs: "none", md: "flex" },
             alignItems: "center",
             gap: 1.25,
             fontWeight: 700,
-            fontSize: 18,
-            letterSpacing: "0.02em"
+            fontSize: { md: 16, lg: 18 },
+            letterSpacing: "0.02em",
+            whiteSpace: "nowrap"
           }}
         >
           <Box
             component="span"
+            aria-hidden="true"
             sx={{
               width: 10,
               height: 10,
               borderRadius: "50%",
               bgcolor: accent.soft,
-              boxShadow: `0 0 0 4px rgba(116,143,252,0.25)`
+              boxShadow: "0 0 0 4px rgba(116,143,252,0.25)"
             }}
           />
           Weather Station (Wuppertal)

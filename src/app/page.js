@@ -1,340 +1,53 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import {
-  Box,
-  Chip,
-  LinearProgress,
-  Pagination,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import SettingsIcon from "@mui/icons-material/Settings";
-import CampaignIcon from "@mui/icons-material/Campaign";
-import SiteHeader from "./components/SiteHeader";
-import { accent } from "./accent";
-import mqtt from "mqtt";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
 import PageBackground from "./components/PageBackground";
+import SiteHeader from "./components/SiteHeader";
+import PageHeading from "./components/PageHeading";
+import HistoryView from "./components/HistoryView";
+import { accent } from "./accent";
+import { getChartSeries, getReadings } from "@/lib/readings";
 
-const ROWS_PER_PAGE = 15;
-
-const isNum = (v) => typeof v === "number" && !Number.isNaN(v);
-
-function temperatureColor(t) {
-  if (t < 10) return "info";
-  if (t <= 25) return "success";
-  if (t <= 30) return "warning";
-  return "error";
-}
-
-function batteryColor(b) {
-  if (b < 20) return "error";
-  if (b < 50) return "warning";
-  return "success";
-}
-
-const headCellSx = {
-  bgcolor: "#f8fafc",
-  color: "text.secondary",
-  fontSize: 12,
-  fontWeight: 700,
-  letterSpacing: "0.06em",
-  textTransform: "uppercase",
-  borderBottom: "1px solid #e2e8f0",
-  whiteSpace: "nowrap"
+export const metadata = {
+  // absolute, because the template of the root layout does not apply to its own segment
+  title: { absolute: "Mobile Weather Station — live ESP32 sensor data" },
+  description:
+    "Every reading the weather station has recorded so far: temperature, humidity, battery level and GPS position."
 };
 
-const numSx = { fontVariantNumeric: "tabular-nums" };
-
-function Empty() {
-  return <Box component="span" sx={{ color: "text.disabled" }}>–</Box>;
-}
-
+// Server component: the history is read at build time and rendered into the HTML.
+// Only the live part (MQTT, pagination, chart) runs in the browser.
 export default function Home() {
-
-
-  const [data, setData] = useState([
-    { name: "Temp", value: 0 },
-    { name: "Humidity", value: 0 },
-    { name: "Battery", value: 0 }
-  ]);
-
-  const [rows, setRows] = useState([]);
-
-  // Pagination
-  const [page, setPage] = useState(1);
-
-  // Historie aus dem statischen Export der Datenbank laden
-  useEffect(() => {
-    async function loadHistory() {
-      try {
-        const res = await fetch("/readings.json");
-        const dbRows = await res.json();
-        const mapped = dbRows.map((r) => {
-          const d = new Date(r.time);
-          return {
-            date: d.toLocaleDateString(),
-            time: d.toLocaleTimeString(),
-            temperature: r.temperature ?? "-",
-            humidity: r.humidity ?? "-",
-            lon: r.lon ?? "-",
-            lat: r.lat ?? "-",
-            battery: r.battery ?? "-"
-          };
-        });
-        // Live-Zeilen, die schon per MQTT eingetroffen sind, bleiben oben
-        setRows((prev) => [...prev, ...mapped]);
-      } catch (err) {
-        console.error("Failed to load readings:", err);
-      }
-    }
-    loadHistory();
-  }, []);
-
-  // MQTT Connector
-  useEffect(() => {
-    const client = mqtt.connect("wss://broker.emqx.io:8084/mqtt");
-
-    client.on("connect", () => {
-      console.log("MQTT connected");
-      client.subscribe("fhswf/lennard/json");
-    });
-
-    client.on("message", (topic, message) => {
-      try {
-        console.log("RAW:", message.toString());
-        const payload = JSON.parse(message.toString());
-
-        // Aktuelle Sensordaten
-        setData([
-          { name: "Temperature", value: payload.temperature ?? 0 },
-          { name: "Humidity", value: payload.humidity ?? 0 },
-          { name: "Battery", value: payload.battery ?? 0 }
-        ]);
-
-        // Neue Zeile an die Tabelle anhängen (live, on top)
-        const now = new Date();
-        setRows((prev) => [
-          {
-            date: now.toLocaleDateString(),
-            time: now.toLocaleTimeString(),
-            temperature: payload.temperature ?? "-",
-            humidity: payload.humidity ?? "-",
-            lon: payload.lon ?? "-",
-            lat: payload.lat ?? "-",
-            battery: payload.battery ?? "-"
-          },
-          ...prev
-        ]);
-      } catch (err) {
-        console.error("Invalid MQTT message:", err);
-      }
-    });
-
-    client.on("error", (err) => {
-      console.error("MQTT error:", err);
-    });
-
-    return () => client.end();
-  }, []);
-
-  // Paginierte Zeilen berechnen
-  const pageCount = Math.max(1, Math.ceil(rows.length / ROWS_PER_PAGE));
-  const paginatedRows = rows.slice(
-    (page - 1) * ROWS_PER_PAGE,
-    page * ROWS_PER_PAGE
-  );
-
-  const handlePageChange = (event, value) => {
-    setPage(value);
-  };
+  const readings = getReadings();
+  const series = getChartSeries(readings);
 
   return (
-    <Box sx={{ fontFamily: "Arial, sans-serif" }}>
+    <Box>
       <PageBackground />
-
-      {/* Header */}
       <SiteHeader active="history" />
 
-      {/* Tabelle */}
-      <Box sx={{ color: "#1a2027", minHeight: "calc(100vh - 90px)", px: { xs: 1.5, sm: 3 }, py: 6 }}>
+      <Box
+        component="main"
+        sx={{ minHeight: "calc(100vh - 90px)", px: { xs: 1.5, sm: 3 }, py: 6 }}
+      >
         <Box sx={{ maxWidth: 1000, mx: "auto" }}>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: 2,
-              mb: 3
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              <Box>
-                <Typography
-                  variant="overline"
-                  sx={{ display: "block", lineHeight: 1.6, color: accent.main, fontWeight: 700, letterSpacing: "0.14em" }}
-                >
-                  Sensor Data
-                </Typography>
-                <Typography
-                  variant="h4"
-                  component="h1"
-                  sx={{
-                    fontWeight: 700,
-                    letterSpacing: "-0.01em",
-                    lineHeight: 1.15,
-                    background: `linear-gradient(90deg, ${accent.ink} 0%, ${accent.main} 100%)`,
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    WebkitTextFillColor: "transparent"
-                  }}
-                >
-                  Weather History Log
-                </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-                  Temperature, humidity and battery over time
-                </Typography>
-              </Box>
-            </Box>
-            <Chip
-              label={`${rows.length} Messwerte`}
-              sx={{ bgcolor: accent.tint, color: accent.dark, fontWeight: 600, border: `1px solid ${accent.border}` }}
-            />
-          </Box>
-
-          <Paper
-            elevation={0}
-            sx={{
-              borderRadius: 3,
-              border: "1px solid #e2e8f0",
-              overflow: "hidden",
-              boxShadow: "0 4px 24px rgba(15, 23, 42, 0.06)"
-            }}
-          >
-            <TableContainer>
-              <Table sx={{ minWidth: 720 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell sx={headCellSx}>Date</TableCell>
-                    <TableCell sx={headCellSx}>Time</TableCell>
-                    <TableCell sx={headCellSx}>Temperature</TableCell>
-                    <TableCell sx={headCellSx}>Humidity</TableCell>
-                    <TableCell sx={headCellSx} align="right">Latitude</TableCell>
-                    <TableCell sx={headCellSx} align="right">Longitude</TableCell>
-                    <TableCell sx={headCellSx}>Battery</TableCell>
-                  </TableRow>
-                </TableHead>
-
-                <TableBody>
-                  {paginatedRows.map((row, index) => (
-                    <TableRow
-                      key={index}
-                      hover
-                      sx={{
-                        "&:nth-of-type(even)": { bgcolor: "#fafbfc" },
-                        "&:last-child td": { borderBottom: 0 },
-                        "& td": { borderBottom: "1px solid #eef2f6", py: 1.5 }
-                      }}
-                    >
-                      <TableCell sx={{ ...numSx, fontWeight: 600 }}>{row.date}</TableCell>
-                      <TableCell sx={{ ...numSx, color: "text.secondary" }}>{row.time}</TableCell>
-                      <TableCell>
-                        {isNum(row.temperature) ? (
-                          <Chip
-                            size="small"
-                            variant="outlined"
-                            color={temperatureColor(row.temperature)}
-                            label={`${row.temperature} °C`}
-                            sx={{ fontWeight: 600, ...numSx }}
-                          />
-                        ) : (
-                          <Empty />
-                        )}
-                      </TableCell>
-                      <TableCell sx={numSx}>
-                        {isNum(row.humidity) ? `${row.humidity} %` : <Empty />}
-                      </TableCell>
-                      <TableCell align="right" sx={{ ...numSx, color: "text.secondary" }}>
-                        {isNum(row.lat) ? row.lat : <Empty />}
-                      </TableCell>
-                      <TableCell align="right" sx={{ ...numSx, color: "text.secondary" }}>
-                        {isNum(row.lon) ? row.lon : <Empty />}
-                      </TableCell>
-                      <TableCell sx={{ minWidth: 130 }}>
-                        {isNum(row.battery) ? (
-                          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                            <LinearProgress
-                              variant="determinate"
-                              value={Math.min(100, Math.max(0, row.battery))}
-                              color={batteryColor(row.battery)}
-                              sx={{ flex: 1, height: 6, borderRadius: 3, bgcolor: "#e9eef3" }}
-                            />
-                            <Box component="span" sx={{ ...numSx, fontSize: 13, minWidth: 34, textAlign: "right" }}>
-                              {row.battery} %
-                            </Box>
-                          </Box>
-                        ) : (
-                          <Empty />
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-
-                  {paginatedRows.length === 0 && (
-                    <TableRow>
-                      <TableCell colSpan={7} align="center" sx={{ py: 6, color: "text.secondary" }}>
-                        Noch keine Messwerte
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-
-            {/* Pagination */}
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: { xs: "1fr", sm: "1fr auto 1fr" },
-                justifyItems: { xs: "center", sm: "stretch" },
-                alignItems: "center",
-                gap: 1,
-                px: 2,
-                py: 1.5,
-                borderTop: "1px solid #e2e8f0",
-                bgcolor: "#f8fafc"
-              }}
-            >
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                {rows.length === 0
-                  ? "0 Einträge"
-                  : `${(page - 1) * ROWS_PER_PAGE + 1}–${Math.min(page * ROWS_PER_PAGE, rows.length)} von ${rows.length}`}
-              </Typography>
-              <Pagination
-                count={pageCount}
-                page={page}
-                onChange={handlePageChange}
-                shape="rounded"
-                size="small"
+          <PageHeading
+            eyebrow="Sensor Data"
+            title="Weather History Log"
+            subtitle="Temperature, humidity and battery level over time. New readings appear at the top as soon as the station publishes them."
+            action={
+              <Chip
+                label={`${readings.length} recorded`}
                 sx={{
-                  order: { xs: -1, sm: 0 },
-                  "& .MuiPaginationItem-root.Mui-selected": {
-                    bgcolor: accent.main,
-                    color: "white",
-                    "&:hover": { bgcolor: accent.dark }
-                  }
+                  bgcolor: accent.tint,
+                  color: accent.dark,
+                  fontWeight: 600,
+                  border: `1px solid ${accent.border}`
                 }}
               />
-            </Box>
-          </Paper>
+            }
+          />
+
+          <HistoryView readings={readings} series={series} />
         </Box>
       </Box>
     </Box>

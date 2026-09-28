@@ -1,45 +1,28 @@
-"use client";
-
-import { Box, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
 import PageBackground from "../components/PageBackground";
 import SiteHeader from "../components/SiteHeader";
+import PageHeading from "../components/PageHeading";
 import InfoCard from "../components/InfoCard";
-import { accent } from "../accent";
+
+export const metadata = {
+  title: "Hardware",
+  description:
+    "The parts the weather station is built from: a BME680 environmental sensor, a T-SIM7000G board with LTE and GPS, and an 18650 lithium-ion cell."
+};
 
 export default function Hardware() {
   return (
-    <Box sx={{ fontFamily: "Arial, sans-serif" }}>
+    <Box>
       <PageBackground />
       <SiteHeader active="hardware" />
 
-      <Box sx={{ color: "#1a2027", minHeight: "calc(100vh - 90px)", px: { xs: 1.5, sm: 3 }, py: 6 }}>
+      <Box component="main" sx={{ minHeight: "calc(100vh - 90px)", px: { xs: 1.5, sm: 3 }, py: 6 }}>
         <Box sx={{ maxWidth: 1000, mx: "auto" }}>
-          <Box sx={{ mb: 4 }}>
-            <Typography
-              variant="overline"
-              sx={{ display: "block", lineHeight: 1.6, color: accent.main, fontWeight: 700, letterSpacing: "0.14em" }}
-            >
-              Weather Station
-            </Typography>
-            <Typography
-              variant="h4"
-              component="h1"
-              sx={{
-                fontWeight: 700,
-                letterSpacing: "-0.01em",
-                lineHeight: 1.15,
-                background: `linear-gradient(90deg, ${accent.ink} 0%, ${accent.main} 100%)`,
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                WebkitTextFillColor: "transparent"
-              }}
-            >
-              Hardware
-            </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </Typography>
-          </Box>
+          <PageHeading
+            eyebrow="Weather Station"
+            title="Hardware"
+            subtitle="The station runs off a single 18650 cell and reports over the mobile network, so it does not depend on Wi-Fi and can be placed anywhere with LTE coverage."
+          />
 
           <Box
             sx={{
@@ -58,6 +41,7 @@ export default function Hardware() {
               alt="BME680 sensor board"
               eyebrow="Sensor"
               title="BME680"
+              text="Measures temperature, humidity and air pressure on one I2C board."
               groupLabel="Deviation"
               rows={[
                 ["Temperature", "±1.0 °C"],
@@ -70,6 +54,7 @@ export default function Hardware() {
               alt="T-SIM7000G board"
               eyebrow="Hardware"
               title="T-SIM7000G"
+              text="ESP32 board with a built-in LTE modem and GPS receiver. It publishes every reading to the MQTT broker."
               rows={[
                 ["Cores", "2 (dual-core)"],
                 ["Clock", "80 MHz"],
@@ -82,6 +67,7 @@ export default function Hardware() {
               alt="INR18650-35E lithium-ion cell"
               eyebrow="Battery"
               title="INR18650-35E"
+              text="Powers the station between charges. Its charge level is sent with every reading."
               rows={[
                 ["Capacity", "3450 mAh"],
                 ["Voltage", "3.6 V"],

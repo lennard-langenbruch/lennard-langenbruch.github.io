@@ -1,162 +1,20 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { Box } from "@mui/material";
-import SiteHeader from "../components/SiteHeader";
-import Spinner from "../components/Spinner";
-import ExportedLiveMap from "../components/ExportedLiveMap";
-import mqtt from "mqtt";
+import Box from "@mui/material/Box";
 import PageBackground from "../components/PageBackground";
+import SiteHeader from "../components/SiteHeader";
+import LiveDashboard from "../components/LiveDashboard";
 
-export default function LiveCurrent() {
-const [latest, setLatest] = useState(null);
-const [connected, setConnected] = useState(false);
+export const metadata = {
+  title: "Live Dashboard",
+  description:
+    "Current temperature, humidity, battery level and GPS position of the weather station, streamed over MQTT."
+};
 
-// MQTT Connector — einzige Datenquelle
-useEffect(() => {
-const client = mqtt.connect("wss://broker.emqx.io:8084/mqtt");
-
-client.on("connect", () => {
-    console.log("MQTT connected");
-    setConnected(true);
-    client.subscribe("fhswf/lennard/json");
-});
-
-client.on("message", (topic, message) => {
-    try {
-    const payload = JSON.parse(message.toString());
-    const now = new Date();
-
-    setLatest({
-        date: now.toLocaleDateString(),
-        time: now.toLocaleTimeString(),
-        temperature: payload.temperature ?? "-",
-        humidity: payload.humidity ?? "-",
-        lon: payload.lon ?? "-",
-        lat: payload.lat ?? "-",
-        battery: payload.battery ?? "-",
-        gps: payload.gps ?? "-",
-    });
-    } catch (err) {
-    console.error("Invalid MQTT message:", err);
-    }
-});
-
-client.on("close", () => setConnected(false));
-client.on("error", (err) => {
-    console.error("MQTT error:", err);
-    setConnected(false);
-});
-
-return () => client.end();
-}, []);
-
-return (
-<Box sx={{ fontFamily: "Arial, sans-serif" }}>
-    <PageBackground variant="dark" />
-
-    {/* HEADER */}
-    <SiteHeader active="live" />
-
-    {/* Aktueller Wert */}
-    <Box
-    sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        mt: 6,
-        px: 3,
-    }}
-    >
-    <Box
-        sx={{
-        width: "100%",
-        maxWidth: "500px",
-        textAlign: "center",
-        fontSize: "32px",
-        fontWeight: "bold",
-        mb: 1,
-        color: "#f1f5f9",
-        }}
-    >
-        🔴 Live Dashboard
+export default function LivePage() {
+  return (
+    <Box>
+      <PageBackground variant="dark" />
+      <SiteHeader active="live" />
+      <LiveDashboard />
     </Box>
-
-    <Box
-        sx={{
-        fontSize: "14px",
-        color: connected ? "#4ade80" : "#94a3b8",
-        mb: 3,
-        }}
-    >
-        {connected ? "● Live connected to emqx (fhswf/lennard/json)" : "○ Connecting to emqx ((fhswf/lennard/json)"}
-    </Box>
-
-    {!latest ? (
-        <Spinner />
-    ) : (
-        <Box
-        sx={{
-            width: "100%",
-            maxWidth: "500px",
-            backgroundColor: "white",
-            border: "1px solid black",
-            borderRadius: "8px",
-            overflow: "hidden",
-        }}
-        >
-        <Box
-            sx={{
-            px: 3,
-            py: 1.5,
-            borderBottom: "1px solid #ccc",
-            fontSize: "14px",
-            color: "#666",
-            }}
-        >
-            {latest.date} — {latest.time}
-        </Box>
-
-        <Box sx={{ px: 3, py: 2 }}>
-            <Row label="Temperature" value={`${latest.temperature} °C`} big />
-            <Row
-            label="Humidity"
-            value={`${latest.humidity} %`}
-            big
-            />
-            <Row label="Battery" value={`${latest.battery} %`} />
-            <Row label="GPS Status" value={latest.gps} />
-            <Row label="Latitude" value={latest.lat} />
-            <Row label="Longitude" value={latest.lon} />
-        </Box>
-        </Box>
-    )}
-
-    {/* Kartenausschnitt: von Anfang an sichtbar, Marker kommt sobald ein GPS-Fix da ist */}
-    <ExportedLiveMap
-        lon={typeof latest?.lon === "number" ? latest.lon : undefined}
-        lat={typeof latest?.lat === "number" ? latest.lat : undefined}
-    />
-    </Box>
-</Box>
-);
-}
-
-function Row({ label, value, big }) {
-return (
-<Box
-    sx={{
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    py: big ? 1.5 : 1,
-    borderBottom: "1px solid #eee",
-    }}
->
-    <Box sx={{ color: "#666", fontSize: big ? "16px" : "14px" }}>{label}</Box>
-    <Box sx={{ fontWeight: "bold", fontSize: big ? "28px" : "16px" }}>
-    {value}
-    </Box>
-</Box>
-);
+  );
 }
